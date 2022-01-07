@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<title>Blackjack</title>
+<link rel="icon" href="aceofhearts.ico">
+<link rel="stylesheet" href="style.css">
+<!--
+To Do list
+Add settings menu 
+Add height AND width scaling to all elements using css
+-->
+
+    
+
+<div class="names" style="left: 37vw;">Player:</div> <!-- display the name "Player" -->
+
+<input type="text" id="playerScore" class="score-box" size="15" style="left:37vw;" readonly> <!-- display player score -->
+
+<div class="names" style="left: 63vw;">Computer:</div> <!-- display the name "Computer" -->
+
+<input type="text" id="computerScore" class="score-box" size="15" style="left:63vw;" readonly> <!-- display computer score -->
+
+<input type="button" id="reset" value="Reset" onClick="restart(); playerPoints = 0; computerPoints = 0; updatePoints(); cardsPicked = [];" class="reset"> <!-- reset button -->
+
+<div id="thinkingText" style="top: 12vh; left: 63vw; transform: translate(-50%,-50%); font-size: 3vh; position: absolute; 
+color: darkslategrey; visibility: hidden;">Thinking...</div> <!-- thinking text for computer -->
+
+<div id="announcements"></div> <!-- announce win, loss, or tie -->
+
+<div id="announcements2">Cards Reshuffled</div> <!-- announce card reshuffle -->
+
+<button id="next" class="next" type="button" onClick="restart();">Next round</button> <!-- next round button -->
+
+<div id="playerPoints" class="points" style="left:37vw;">Points: 0</div> <!-- display player points -->
+
+<div id="computerPoints" class="points" style="left:63vw;">Points: 0</div> <!-- display player points -->
+
+<div class="button" id="standCircle" onClick="computerHit()" style="left: 63vw;">Stand</div> <!-- display stand button -->
+
+<div class="button" id="hitCircle" onClick="playerHit();" style="left: 37vw;">Hit</div> <!-- display hit button -->
+
+<script src="javascript.js"></script> <!-- load javascript file -->
+
+
+
+
+
+
+
+

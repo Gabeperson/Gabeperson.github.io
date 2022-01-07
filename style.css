@@ -1,0 +1,172 @@
+
+/* change most elements to be undraggable and unselectable, set background color */
+body {
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      background-color: aquamarine;
+      user-select: none;
+}
+
+/* styling for card images */
+.card-image {
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      border-radius: 2.9%;
+      user-select: none;
+      width: calc(6vw + 6vh);
+}
+
+/* styling for player and computer names */
+.names {
+      font-size: 2vw;
+      position: absolute;
+      top: 4vh; 
+      transform: translate(-50%,-50%);
+}
+
+/* styling for score boxes*/
+.score-box {
+      font-size: 1.5vw;
+      position: absolute;
+      text-align: center;
+      top: 60vh;
+      transform: translate(-50%,-50%);
+}
+
+/* styling for reset button */
+.reset {
+      background: rgb(227,227,227);
+      color: red;
+      font-size: calc(1vh + 0.7vw);
+      height: 6vh;
+      left: 50vw;
+      position: absolute;
+      top: 60vh;
+      transform: translate(-50%,-50%);
+      width: 8vw;
+}
+
+.reset:hover {
+      cursor: pointer;
+}
+
+.reset:hover:active {
+      background: rgb(210,210,210);
+}
+
+/* styling for next round button */
+.next {
+      background: rgb(227,227,227);
+      color: black;
+      font-size: calc(1vh + 1vw);
+      height: 8vh;
+      left: 50vw;
+      position: absolute;
+      top: 85vh;
+      transform: translate(-50%,-50%);
+      visibility: hidden;
+      width: 20vw;
+}
+
+.next:hover {
+      cursor: pointer;
+}
+
+/* styling for announcements text */
+#announcements {
+      color: black;
+      font-size: calc(6vh + 4vw);
+      font-weight: 5px;
+      left: 50vw;
+      position: absolute;
+      text-align: center;
+      top: 70vh;
+      transform: translate(-50%,-50%);
+      vertical-align: middle;
+}
+
+#announcements2 {
+      color: red;
+      font-size: calc(1.5vh + 1.5vw);
+      font-weight: 5px;
+      left: 50vw;
+      position: absolute;
+      text-align: center;
+      top: 50vh;
+      transform: translate(-50%,-50%);
+      vertical-align: middle;
+      visibility: hidden;
+}
+
+/* styling for player and computer points */
+.points {
+      font-size: 1.5vw;
+      position: absolute;
+      top: 8vh; 
+      transform: translate(-50%,-50%)
+}
+
+/* styling for hit and stand Buttons */
+.button {
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      -webkit-user-select: none; /* Safari */        
+      background-color: #99FF99;
+      border-radius: 50%;
+      border-width: thin;
+      border: solid green;
+      font-size: calc(10vw / 4);
+      height: calc(7vw + 9vh);
+      width: calc(7vw + 9vh);
+      line-height: calc(( 5vw + 5vh ) / 0.95);
+      position: fixed;
+      text-align: center;
+      top: 84vh;
+      transform: translate(-50%,-50%);
+      user-select: none; /* Standard */
+      vertical-align: middle;    
+}
+
+.button:hover {
+      cursor: pointer;
+}
+
+.button:hover:active {
+      background-color: #55FF55;
+}
+
+/* styling and animations for card flipping */
+.card-outer {
+      height: calc(10vw + 9vh);
+      perspective-origin: 50vw 30vh;
+      perspective: 1000px;
+      width: calc(6vw + 6vh);
+}
+
+.card-inner {
+      border-radius: 2.9%;
+      height: calc(10vw + 9vh);
+      position: absolute;
+      text-align: center;
+      transform-style: preserve-3d;
+      transition: transform 1s;
+      width: calc(6vw + 6vh);
+}
+
+.flip-action {
+      transform: rotateY(-180deg);
+      transition: transform 0.6s;
+}
+
+.card-front {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      height: 100%;
+      position: absolute;
+      transform: rotateY(180deg);
+      width: 100%;
+}
