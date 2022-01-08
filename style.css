@@ -5,8 +5,9 @@ body {
       -ms-user-select: none;
       -webkit-user-drag: none;
       -webkit-user-select: none;
-      background-color: aquamarine;
+      background-color: darkgreen;
       user-select: none;
+      color: lightGray;
 }
 
 /* styling for card images */
@@ -35,11 +36,12 @@ body {
       text-align: center;
       top: 60vh;
       transform: translate(-50%,-50%);
+      background-color: lightgray;
 }
 
 /* styling for reset button */
 .reset {
-      background: rgb(227,227,227);
+      background: lightslategray;
       color: red;
       font-size: calc(1vh + 0.7vw);
       height: 6vh;
@@ -78,7 +80,7 @@ body {
 
 /* styling for announcements text */
 #announcements {
-      color: black;
+      color: aqua;
       font-size: calc(6vh + 4vw);
       font-weight: 5px;
       left: 50vw;
@@ -115,10 +117,10 @@ body {
       -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* IE10+/Edge */
       -webkit-user-select: none; /* Safari */        
-      background-color: #99FF99;
+      background-color: aquamarine;
       border-radius: 50%;
       border-width: thin;
-      border: solid green;
+      border: solid blue;
       font-size: calc(10vw / 4);
       height: calc(7vw + 9vh);
       width: calc(7vw + 9vh);
@@ -129,6 +131,7 @@ body {
       transform: translate(-50%,-50%);
       user-select: none; /* Standard */
       vertical-align: middle;    
+      color: black;
 }
 
 .button:hover {
@@ -136,7 +139,7 @@ body {
 }
 
 .button:hover:active {
-      background-color: #55FF55;
+      background-color: aqua  ;
 }
 
 /* styling and animations for card flipping */

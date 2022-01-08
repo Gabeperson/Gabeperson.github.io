@@ -6,10 +6,10 @@ var playerPoints = 0; // rounds player has won
 var computerPoints = 0; // rounds computer has won
 var xCoord = 0; // variable for calculating card x position
 var yCoord = 0; // variable for calculating card y position
-var denyPlayerMoves = false; // variable for prevention of spamming the stand button
+var denyPlayerMoves = false; // variable for prevention of all player action for when it is the computer's turn
 const delays = [400, 700, 1000, 1300, 1500]; // configurable array for computer card picking delay
-const suits = ["hearts", "diamonds", "spades", "clubs"];
-var cardsPicked = [];
+const suits = ["hearts", "diamonds", "spades", "clubs"]; // array for picking suit for cards
+var cardsPicked = []; // empty array that stores cards picked so far, which are used to compare against picked cards
 
 // updates player and computer points
 function updatePoints() {
