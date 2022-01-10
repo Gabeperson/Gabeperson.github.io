@@ -8,8 +8,24 @@ var xCoord = 0; // variable for calculating card x position
 var yCoord = 0; // variable for calculating card y position
 var denyPlayerMoves = false; // variable for prevention of spamming the stand button
 const delays = [400, 700, 1000, 1300, 1500]; // configurable array for computer card picking delay
-const suits = ["hearts", "diamonds", "spades", "clubs"];
-var cardsPicked = [];
+const suits = ["hearts", "diamonds", "spades", "clubs"]; // array for picking suits
+var cardsPicked = []; // array for listing all cards picked
+var timer; // timeout variable for computer card picking
+var timer2; // timeout variable for win/loss/tie
+
+// resets the game to initial state
+function reset() {
+
+      clearTimeout(timer); // clears computer card picking timeout
+      clearTimeout(timer2); // clears win/loss/tie timeout
+      restart(); // call restart function to reset variables
+      playerPoints = 0; // reset player points
+      computerPoints = 0; // reset computer points
+      updatePoints(); // update points
+      cardsPicked = []; // reset card picked array
+      document.getElementById("thinkingText").style.visibility = "hidden"; // reset thinking text
+
+}
 
 // updates player and computer points
 function updatePoints() {
@@ -93,21 +109,21 @@ function computerRecursion() {
 
                   if (computerScore == playerScore) {
                         //game is a tie
-                        setTimeout(gameEnd, 300, "tie"); // slight timeout to delay gameEnd function so values can update
+                        timer2 = setTimeout(gameEnd, 300, "tie"); // slight timeout to delay gameEnd function so values can update
                         return; // Technically optional return, but avoids unnecessary recursive calls, optimizing performance
                   } else if (computerScore > 21) {
                         //player wins
-                        setTimeout(gameEnd, 300, "win"); // slight timeout to delay gameEnd function so values can update
+                        timer2 = setTimeout(gameEnd, 300, "win"); // slight timeout to delay gameEnd function so values can update
                         return; // Technically optional return, but avoids unnecessary recursive calls, optimizing performance
                   } else {
                         //player loses
-                        setTimeout(gameEnd, 300, "lose"); // slight timeout to delay gameEnd function so values can update
+                        timer2 = setTimeout(gameEnd, 300, "lose"); // slight timeout to delay gameEnd function so values can update
                         return; // Technically optional return, but avoids unnecessary recursive calls, optimizing performance
                   }
 
             }
 
-            setTimeout(computerRecursion, delays[Math.floor(Math.random() * delays.length)]); // call itself after a random delay from the array "delay"
+            timer = setTimeout(computerRecursion, delays[Math.floor(Math.random() * delays.length)]); // call itself after a random delay from the array "delay"
       }
 
 }
