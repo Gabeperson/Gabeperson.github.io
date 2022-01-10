@@ -13,11 +13,6 @@ var cardsPicked = []; // array for listing all cards picked
 var timer; // timeout variable for computer card picking
 var timer2; // timeout variable for win/loss/tie
 
-// fun way to stop cheating
-console.log("You shouldn't be here! This is for cheaters!")
-console.log("Well... I guess the only reason why you'd be here...")
-console.log("would be because you want to cheat...")
-
 // resets the game to initial state
 function reset() {
 
