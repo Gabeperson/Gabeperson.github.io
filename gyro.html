@@ -51,19 +51,19 @@
             yPos += yVel;
 
             if (xPos > 90) {
-                xPos = 89;
+                xPos -= xVel;
                 xVel = 0;
             }
             if (yPos > 90) {
-                yPos = 89;
+                yPos -= yVel;
                 yVel = 0;
             }
             if (xPos < 10) {
-                xPos = 11;
+                xPos -= xVel;
                 xVel = 0;
             }
             if (yPos < 10) {
-                yPos = 11;
+                yPos -= yVel;
                 yVel = 0;
             }
 
