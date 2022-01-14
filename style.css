@@ -171,3 +171,22 @@ body {
       transform: rotateY(180deg);
       width: 100%;
 }
+
+/*
+index.html styling (for buttons)
+*/
+.menuButton {
+      font-size: 5vh;
+      height: 10vh;
+      width: 20vw;
+      position: absolute;
+      left: 50vw;
+      transform: translate(-50%, -50%);
+      border-style: solid;
+      border-color: gray;
+      border-width: 3px;
+      text-align: center;
+      line-height: 10vh;
+      color: white;
+      background-color: darkGrey;
+}

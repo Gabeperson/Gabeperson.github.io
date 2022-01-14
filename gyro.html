@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        #ball {
+            border-radius: 50%;
+            border-style: solid;
+            border-color: blue;
+            transform: translate(-50%, -50%);
+            height: 100px;
+            width: 100px;
+            left: 50vw;
+            top: 50vh;
+            position: absolute;
+        }
+    </style>
+    <div id="ball"></div>
+
+    <script>
+        var yGyro = 0;
+        var xGyro = 0;
+        var xVel = 0;
+        var yVel = 0;
+        var xPos = 50;
+        var yPos = 50;
+        var speedLimit = 1;
+
+        function tick() {
+            xVel += xGyro / 1000;
+            yVel += yGyro / 1000;
+
+            if (xVel > speedLimit) {
+                xVel = speedLimit;
+            }
+            if (yVel > speedLimit) {
+                yVel = speedLimit;
+            }
+
+            if (yVel < -speedLimit) {
+                yVel = -speedLimit;
+            }
+
+            if (yVel < -speedLimit) {
+                yVel = -speedLimit;
+            }
+
+            console.log(xVel)
+            console.log(yVel)
+            
+            xPos += xVel;
+            yPos += yVel;
+
+            if (xPos > 90) {
+                xPos = 90;
+            }
+            if (yPos > 90) {
+                yPos = 90;
+            }
+            if (xPos < 10) {
+                xPos = 10;
+            }
+            if (yPos < 10) {
+                yPos = 10;
+            }
+
+            document.getElementById("ball").style.left = xPos + "vw";
+            document.getElementById("ball").style.top = yPos + "vh";
+        }
+
+        function handleOrientation(event) {
+            yGyro = event.beta;
+            xGyro = event.gamma;
+        }
+
+        window.addEventListener("deviceorientation", handleOrientation)
+
+       
+
+        
+        setInterval(tick, 10)
+
+    </script>
+</html>
