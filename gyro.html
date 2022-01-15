@@ -22,6 +22,7 @@
         }
     </style>
 
+<!--Detect landscape-->
 <p id="announcement" style="color: red; font-weight: bold;"></p>
 
 <script>
@@ -34,7 +35,10 @@
     }
     landscapeCheck();
     window.addEventListener('resize', landscapeCheck)
+
+
 </script>
+
 
 <div id="ball"></div>
 <!--Debug HTML from here-->
@@ -139,7 +143,6 @@
         document.getElementById("ball").style.height = heightAndWidth + "px";
         document.getElementById("ball").style.width = heightAndWidth + "px";
 
-        
         setInterval(tick, 4)
         
     </script>
