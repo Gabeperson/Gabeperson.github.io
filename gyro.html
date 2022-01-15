@@ -21,7 +21,7 @@
         var yVel = 0;
         var xPos = 50;
         var yPos = 50;
-        var speedLimit = 1;
+        var speedLimit = 50;
         var pageXMax = 0;
         var pageXMin = 0;
         var pageYMax = 0;
@@ -31,8 +31,8 @@
         function tick() {
 
             getPageSize();
-            xVel += xGyro / 400;
-            yVel += yGyro / 1000;
+            xVel += xGyro / 4;
+            yVel += yGyro / 4;
 
 
 
@@ -51,31 +51,34 @@
                 yVel = -speedLimit;
             }
 
-            console.log(xVel)
-            console.log(yVel)
+
+            if (!((xPos + xVel) > pageXMax || (xPos + xVel) < pageXMin)) {
+                xPos += xVel
+            } else {
+                if ((xPos + xVel) > pageXMax) {
+                    xPos = pageXMax
+                } else {
+                    xPos = pageXMax
+                }
+            }
+
+            if (!((yPos + yVel) > pageYMax || (yPos + yVel) < pageYMin)) {
+                yPos += yVel
+            }  else {
+                if ((yPos + yVel) > pageYMax) {
+                    yPos = pageYMax
+                } else {
+                    yPos = pageYMax
+                }
+            }
+
+
             
-            xPos += xVel;
-            yPos += yVel;
+            
+            
 
-            if (xPos > 90) {
-                xPos -= xVel;
-                xVel = 0;
-            }
-            if (yPos > 90) {
-                yPos -= yVel;
-                yVel = 0;
-            }
-            if (xPos < 10) {
-                xPos -= xVel;
-                xVel = 0;
-            }
-            if (yPos < 10) {
-                yPos -= yVel;
-                yVel = 0;
-            }
-
-            document.getElementById("ball").style.left = xPos + "vw";
-            document.getElementById("ball").style.top = yPos + "vh";
+            document.getElementById("ball").style.left = xPos + "px";
+            document.getElementById("ball").style.top = yPos + "px";
         }
 
         function getPageSize() {
