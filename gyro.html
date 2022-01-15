@@ -26,16 +26,6 @@
 <p id="announcement" style="color: red; font-weight: bold;"></p>
 
 <div id="ball"></div>
-<!--Debug HTML from here-->
-<button id="debugButton" onClick="debugMenu();">Debug Menu</button>
-<p id="-1"></p>
-<p id="0"></p>
-<p id="1"></p>
-<p id="2"></p>
-<p id="3"></p>
-<p id="4"></p>
-<p id="5"></p>
-<p id="6"></p>
 
     
 
@@ -126,41 +116,4 @@
 
         setInterval(tick, 4)
         
-
-        var debugMenuOn = true;
-        function debug() {
-            document.getElementById("-1").innerHTML = "xPos: " + xPos
-            document.getElementById("0").innerHTML = "yPos: " + yPos
-            document.getElementById("1").innerHTML = "xVel: " + xVel
-            document.getElementById("2").innerHTML = "yVel: " + yVel
-            document.getElementById("3").innerHTML = "pageXMax: " + pageXMax
-            document.getElementById("4").innerHTML = "pageXMin: " + pageXMin
-            document.getElementById("5").innerHTML = "pageYMax" + pageYMax
-            document.getElementById("6").innerHTML = "pageYMin: " + pageYMin
-        }
-        setInterval(debug, 10)
-
-        function debugMenu() {
-            if (debugMenuOn == false) {
-                document.getElementById("-1").style.visibility = "visible";
-                document.getElementById("0").style.visibility = "visible";
-                document.getElementById("1").style.visibility = "visible";
-                document.getElementById("2").style.visibility = "visible";
-                document.getElementById("3").style.visibility = "visible";
-                document.getElementById("4").style.visibility = "visible";
-                document.getElementById("5").style.visibility = "visible";
-                document.getElementById("6").style.visibility = "visible";
-                debugMenuOn = true;
-            } else {
-                document.getElementById("-1").style.visibility = "hidden";
-                document.getElementById("0").style.visibility = "hidden";
-                document.getElementById("1").style.visibility = "hidden";
-                document.getElementById("2").style.visibility = "hidden";
-                document.getElementById("3").style.visibility = "hidden";
-                document.getElementById("4").style.visibility = "hidden";
-                document.getElementById("5").style.visibility = "hidden";
-                document.getElementById("6").style.visibility = "hidden";
-                debugMenuOn = false;
-            }
-        }
     </script>
