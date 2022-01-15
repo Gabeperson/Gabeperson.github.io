@@ -126,8 +126,8 @@
         document.getElementById("ball").style.width = heightAndWidth + "px";
 
         
-        //setInterval(tick, 10)
-        document.addEventListener("deviceorientation", tick)
+        setInterval(tick, 4)
+        
     </script>
     <script>
         var debugMenuOn = true;
@@ -141,7 +141,7 @@
             document.getElementById("5").innerHTML = "pageYMax" + pageYMax
             document.getElementById("6").innerHTML = "pageYMin: " + pageYMin
         }
-        setInterval(debug, 4)
+        setInterval(debug, 10)
 
         function debugMenu() {
             if (debugMenuOn == false) {
