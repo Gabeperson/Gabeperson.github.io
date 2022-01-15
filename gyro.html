@@ -6,8 +6,6 @@
             border-style: solid;
             border-color: blue;
             transform: translate(-50%, -50%);
-            height: 300px;
-            width: 300px;
             left: 50vw;
             top: 50vh;
             position: absolute;
@@ -24,10 +22,19 @@
         var xPos = 50;
         var yPos = 50;
         var speedLimit = 1;
+        var pageXMax = 0;
+        var pageXMin = 0;
+        var pageYMax = 0;
+        var pageyMin = 0;
+        var heightAndWidth = 300;
 
         function tick() {
+
+            getPageSize();
             xVel += xGyro / 400;
             yVel += yGyro / 1000;
+
+
 
             if (xVel > speedLimit) {
                 xVel = speedLimit;
@@ -71,14 +78,21 @@
             document.getElementById("ball").style.top = yPos + "vh";
         }
 
+        function getPageSize() {
+            pageXMax = window.innerHeight - heightAndWidth
+            pageXMin = heightAndWidth
+            pageYMax = window.innerWidth - heightAndWidth
+            pageYMin = heightAndWidth
+        }
+
         function handleOrientation(event) {
             yGyro = event.beta;
             xGyro = event.gamma;
         }
 
         window.addEventListener("deviceorientation", handleOrientation)
-
-       
+        document.getElementById("ball").style.height = heightAndWidth + "px";
+        document.getElementById("ball").style.width = heightAndWidth + "px";
 
         
         setInterval(tick, 10)
