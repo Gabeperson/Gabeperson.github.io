@@ -54,8 +54,8 @@
         function tick() {
 
             getPageSize();
-            xVel += xGyro / 20;
-            yVel += yGyro / 20;
+            xVel += xGyro / 50;
+            yVel += yGyro / 50;
 
 
 
@@ -141,7 +141,7 @@
             document.getElementById("5").innerHTML = "pageYMax" + pageYMax
             document.getElementById("6").innerHTML = "pageYMin: " + pageYMin
         }
-        setInterval(debug, 10)
+        setInterval(debug, 4)
 
         function debugMenu() {
             if (debugMenuOn == false) {
