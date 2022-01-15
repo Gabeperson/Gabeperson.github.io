@@ -70,6 +70,26 @@
             xVel += xGyro / 100;
             yVel += yGyro / 100;
     
+            if (xVel > speedLimit) {
+                xVel = speedLimit
+            }
+            if (xVel < -speedLimit) {
+                xVel = -speedLimit
+            }
+            if (yVel > speedLimit) {
+                yVel = speedLimit
+            }
+            if (yVel < -speedLimit) {
+                yVel = -speedLimit
+            }
+            
+
+
+
+
+
+
+
 
             if (!((xPos + xVel) > pageXMax || (xPos + xVel) < pageXMin)) {
             xPos += xVel
