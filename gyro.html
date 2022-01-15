@@ -101,9 +101,9 @@
         }
 
         function getPageSize() {
-            pageXMax = window.innerWidth - (heightAndWidth / 2)
+            pageXMax = window.innerWidth - (heightAndWidth / 2) - 10
             pageXMin = (heightAndWidth / 2)
-            pageYMax = window.innerHeight - (heightAndWidth / 2)
+            pageYMax = window.innerHeight - (heightAndWidth / 2) - 10
             pageYMin = (heightAndWidth / 2)
         }
 
@@ -113,6 +113,7 @@
         }
 
         window.addEventListener("deviceorientation", handleOrientation)
+
         document.getElementById("ball").style.height = heightAndWidth + "px";
         document.getElementById("ball").style.width = heightAndWidth + "px";
 
