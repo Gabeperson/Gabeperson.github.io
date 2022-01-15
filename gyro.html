@@ -126,8 +126,8 @@
         document.getElementById("ball").style.width = heightAndWidth + "px";
 
         
-        setInterval(tick, 10)
-
+        //setInterval(tick, 10)
+        document.addEventListener(ondeviceorientation, tick)
     </script>
     <script>
         var debugMenuOn = true;
@@ -166,5 +166,6 @@
                 debugMenuOn = false;
             }
         }
+        screen.orientation.lock("portrait-primary");
     </script>
 </html>
