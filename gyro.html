@@ -25,21 +25,6 @@
 <!--Detect landscape-->
 <p id="announcement" style="color: red; font-weight: bold;"></p>
 
-<script>
-    function landscapeCheck() {
-        if (window.innerHeight < innerWidth) {
-                document.getElementById("announcement").innerHTML = "This app works better in portrait mode! Lock your device's orientation to have the best experience!"
-        } else {
-                document.getElementById("announcement").innerHTML = "";
-        }
-    }
-    landscapeCheck();
-    window.addEventListener('resize', landscapeCheck)
-
-
-</script>
-
-
 <div id="ball"></div>
 <!--Debug HTML from here-->
 <button id="debugButton" onClick="debugMenu();">Debug Menu</button>
@@ -68,6 +53,16 @@
         var pageyMin = 0;
         var heightAndWidth = 300;
         var bounce = 0.3;
+
+        function landscapeCheck() {
+            if (window.innerHeight < innerWidth) {
+                    document.getElementById("announcement").innerHTML = "This app works better in portrait mode! Lock your device's orientation to have the best experience!"
+            } else {
+                    document.getElementById("announcement").innerHTML = "";
+            }
+        }
+        landscapeCheck();
+        window.addEventListener('resize', landscapeCheck)
 
         function tick() {
 
@@ -131,8 +126,7 @@
 
         setInterval(tick, 4)
         
-    </script>
-    <script>
+
         var debugMenuOn = true;
         function debug() {
             document.getElementById("-1").innerHTML = "xPos: " + xPos
