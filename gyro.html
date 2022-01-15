@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-    <style>
-        #ball {
+<style>
+      #ball {
             border-radius: 50%;
             border-style: solid;
             border-color: black;
@@ -10,101 +10,190 @@
             position: absolute;
             border-width: 5px;
             background-color: lightgray;
-        }
-    </style>
+      }
+
+      #goal {
+          border-radius: 50%;
+          border-style: solid;
+          border-color: black;
+          transform: translate(-50%, -50%);
+          left: 800px;
+          top: 500px;
+          position: absolute;
+          border-width: 5px;
+          background-color: lightcoral;
+          height: 300px;
+          width: 300px;
+      }
+</style>
 
 <!--Detect landscape-->
 <p id="announcement" style="color: red; font-weight: bold;"></p>
 
 <div id="ball"></div>
+<div id="goal"></div>
 
-    
 
-    <script>
-        var yGyro = 0;
-        var xGyro = 0;
-        var xVel = 0;
-        var yVel = 0;
-        var xPos = 500;
-        var yPos = 500;
-        var speedLimit = 50;
-        var pageXMax = 0;
-        var pageXMin = 0;
-        var pageYMax = 0;
-        var pageyMin = 0;
-        var heightAndWidth = 300;
-        var bounce = 0.3;
 
-        function landscapeCheck() {
+<script>
+      var yGyro = 0;
+      var xGyro = 0;
+      var xVel = 0;
+      var yVel = 0;
+      var xPos = 500;
+      var yPos = 500;
+      var speedLimit = 50;
+      var pageXMax = 0;
+      var pageXMin = 0;
+      var pageYMax = 0;
+      var pageyMin = 0;
+      var heightAndWidth = 300;
+      var bounce = 0.3;
+      var goalXPos = 200;
+      var goalYPos = 200;
+      var goalXVel = 0;
+      var goalYVel = 0;
+
+      function landscapeCheck() {
             if (window.innerHeight < innerWidth) {
-                    document.getElementById("announcement").innerHTML = "This app works better in portrait mode! Lock your device's orientation to have the best experience!"
+                  document.getElementById("announcement").innerHTML = "This app does not work properly in landscape mode! Lock your device's orientation to have the best experience!"
             } else {
-                    document.getElementById("announcement").innerHTML = "";
+                  document.getElementById("announcement").innerHTML = "";
             }
-        }
-        landscapeCheck();
-        window.addEventListener('resize', landscapeCheck)
+      }
+      landscapeCheck();
+      window.addEventListener('resize', landscapeCheck)
 
-        function tick() {
+      function tick() {
 
             getPageSize();
             xVel += xGyro / 50;
             yVel += yGyro / 50;
-
-
-
-            
-           
+      
 
             if (!((xPos + xVel) > pageXMax || (xPos + xVel) < pageXMin)) {
-                xPos += xVel
+            xPos += xVel
             } else {
-                if ((xPos + xVel) > pageXMax) {
-                    xPos = pageXMax
-                    xVel = -xVel * bounce;
-                } else {
-                    xPos = pageXMin
-                    xVel = -xVel * bounce;
-                }
+            if ((xPos + xVel) > pageXMax) {
+                  xPos = pageXMax
+                  xVel = -xVel * bounce;
+            } else {
+                  xPos = pageXMin
+                  xVel = -xVel * bounce;
+            }
             }
             
             if (!((yPos + yVel) > pageYMax || (yPos + yVel) < pageYMin)) {
-                yPos += yVel
+            yPos += yVel
             }  else {   
-                if ((yPos + yVel) > pageYMax) {
-                    yPos = pageYMax
-                    yVel = -yVel * bounce;
-                } else {
-                    yPos = pageYMin
-                    yVel = -yVel * bounce;
-                }
+            if ((yPos + yVel) > pageYMax) {
+                  yPos = pageYMax
+                  yVel = -yVel * bounce;
+            } else {
+                  yPos = pageYMin
+                  yVel = -yVel * bounce;
+            }
             }
             
-           
+      
             
             
 
             document.getElementById("ball").style.left = xPos + "px";
             document.getElementById("ball").style.top = yPos + "px";
-        }
+      }
 
-        function getPageSize() {
+      function getPageSize() {
             pageXMax = window.innerWidth - (heightAndWidth / 2) - 5
             pageXMin = (heightAndWidth / 2) + 5
             pageYMax = window.innerHeight - (heightAndWidth / 2) - 5
             pageYMin = (heightAndWidth / 2) + 5
-        }
+      }
 
-        function handleOrientation(event) {
+      function handleOrientation(event) {
             yGyro = event.beta;
             xGyro = event.gamma;
-        }
+      }
 
-        window.addEventListener("deviceorientation", handleOrientation)
+      window.addEventListener("deviceorientation", handleOrientation)
 
-        document.getElementById("ball").style.height = heightAndWidth + "px";
-        document.getElementById("ball").style.width = heightAndWidth + "px";
+      document.getElementById("ball").style.height = heightAndWidth + "px";
+      document.getElementById("ball").style.width = heightAndWidth + "px";
 
-        setInterval(tick, 4)
-        
-    </script>
+      
+
+      setInterval(tick, 4)
+
+      function moveGoal() {
+            getPageSize();
+            if (!((goalXPos + goalXVel) > pageXMax || (goalXPos + goalXVel) < pageXMin)) {
+            goalXPos += goalXVel
+            } else {
+            if ((goalXPos + goalXVel) > pageXMax) {
+                  goalXPos = pageXMax
+                  goalXVel = -goalXVel
+            } else {
+                  goalXPos = pageXMin
+                  goalXVel = -goalXVel
+            }
+            }
+            
+            if (!((goalYPos + goalYVel) > pageYMax || (goalYPos + goalYVel) < pageYMin)) {
+            goalYPos += goalYVel
+            } else {
+            if ((goalYPos + goalYVel) > pageYMax) {
+                  goalYPos = pageYMax
+                  goalYVel = -goalYVel
+            } else {
+                  goalYPos = pageYMin
+                  goalYVel = -goalYVel
+            }
+            }
+
+            document.getElementById("goal").style.top = goalYPos + "px";
+            document.getElementById("goal").style.left = goalXPos + "px";
+            
+      }
+
+      function getPageSize() {
+            pageXMax = window.innerWidth - (300 / 2) - 5
+            pageXMin = (300 / 2) + 5
+            pageYMax = window.innerHeight - (300 / 2) - 5
+            pageYMin = (300 / 2) + 5
+      }
+
+      goalXPos = Math.floor(Math.random() * window.innerWidth)
+      
+      goalYPos = Math.floor(Math.random() * window.innerHeight)
+
+      document.getElementById("goal").style.left = goalXPos + "px";
+      document.getElementById("goal").style.top = goalYPos + "px";
+
+      setInterval(moveGoal, 4)
+
+      goalXVel = (Math.random() * 2);
+      goalYVel = (Math.random() * 2);
+
+
+      function detectCollision() {
+            var dx = xPos - goalXPos;
+            var dy = yPos - goalYPos;
+            var dist = Math.sqrt(dx * dx + dy * dy)
+            if (dist < 300) {
+                  return true;
+            } else {
+                  return false;
+            }
+      }
+
+      function changeColor() {
+            if (detectCollision()) {
+                  document.bgColor = "aquamarine";
+            } else {
+                  document.bgColor = "azure";
+            }
+      }
+
+      setInterval(changeColor, 4)
+      
+</script>
