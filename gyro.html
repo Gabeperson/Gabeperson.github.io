@@ -13,6 +13,14 @@
         }
     </style>
     <div id="ball"></div>
+    <p id="-1"></p>
+    <p id="0"></p>
+    <p id="1"></p>
+    <p id="2"></p>
+    <p id="3"></p>
+    <p id="4"></p>
+    <p id="5"></p>
+    <p id="6"></p>
 
     <script>
         var yGyro = 0;
@@ -51,41 +59,52 @@
                 yVel = -speedLimit;
             }
 
+            document.getElementById("-1").innerHTML = "xPos: " + xPos
+            document.getElementById("0").innerHTML = "yPos: " + yPos
+            document.getElementById("1").innerHTML = "xVel: " + xVel
+            document.getElementById("2").innerHTML = "yVel: " + yVel
+            document.getElementById("3").innerHTML = "pageXMax: " + pageXMax
+            document.getElementById("4").innerHTML = "pageXMin: " + pageXMin
+            document.getElementById("5").innerHTML = "pageYMax" + pageYMax
+            document.getElementById("6").innerHTML = "pageYMin: " + pageYMin
 
             if (!((xPos + xVel) > pageXMax || (xPos + xVel) < pageXMin)) {
                 xPos += xVel
-            } /*else {
+            } else {
                 if ((xPos + xVel) > pageXMax) {
                     xPos = pageXMax
+                    xVel = 0;
                 } else {
-                    xPos = pageXMax
+                    xPos = pageXMin
+                    xVel = 0;
                 }
             }
             
             if (!((yPos + yVel) > pageYMax || (yPos + yVel) < pageYMin)) {
                 yPos += yVel
-            }  else {
+            }  else {   
                 if ((yPos + yVel) > pageYMax) {
                     yPos = pageYMax
+                    yVel = 0;
                 } else {
-                    yPos = pageYMax
+                    yPos = pageYMin
+                    yVel = 0;
                 }
             }
-            */
-
             
+           
             
             
 
             document.getElementById("ball").style.left = xPos + "px";
-            //document.getElementById("ball").style.top = yPos + "px";
+            document.getElementById("ball").style.top = yPos + "px";
         }
 
         function getPageSize() {
-            pageXMax = window.innerHeight - heightAndWidth
-            pageXMin = heightAndWidth
-            pageYMax = window.innerWidth - heightAndWidth
-            pageYMin = heightAndWidth
+            pageXMax = window.innerWidth - (heightAndWidth / 2)
+            pageXMin = (heightAndWidth / 2)
+            pageYMax = window.innerHeight - (heightAndWidth / 2)
+            pageYMin = (heightAndWidth / 2)
         }
 
         function handleOrientation(event) {
