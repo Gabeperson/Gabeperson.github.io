@@ -61,25 +61,26 @@
 
 
 <script>
-    var yGyro = 0;
-    var xGyro = 0;
-    var xVel = 0;
-    var yVel = 0;
-    var xPos = 500;
-    var yPos = 500;
-    var speedLimit = 20;
-    var pageXMax = 0;
-    var pageXMin = 0;
-    var pageYMax = 0;
-    var pageyMin = 0;
-    var heightAndWidth = 300;
-    var bounce = 0.3;
-    var goalXPos = 200;
-    var goalYPos = 200;
-    var goalXVel = 0;
-    var goalYVel = 0;
-    var score = 0;
-    var highScore = 0;
+    var yGyro = 0; // X axis gyroscope
+    var xGyro = 0; // Y axis gyrocsope
+    var xVel = 0; // Player ball X velocity
+    var yVel = 0; // Player ball Y velocity
+    var xPos = 500; // Player ball X position
+    var yPos = 500; // Player ball Y position
+    var speedLimit = 20; // Player ball speed limit (px/s)
+    var pageXMax = 0; // Page maximum that ball can be in (x)
+    var pageXMin = 0; // Page minimum that ball can be in (x)
+    var pageYMax = 0; // Page minimum that ball can be in (y)
+    var pageyMin = 0; // Page minimum that ball can be in (y)
+    var heightAndWidth = 300; // Height and width of player ball
+    var bounce = 0.3; // Player ball wall bounce (out of 1)
+    var goalXPos = 200; // Goal ball X position
+    var goalYPos = 200; // Goal ball Y position
+    var goalXVel = 0; // Goal ball X velocity
+    var goalYVel = 0; // Goal ball Y velocity
+    var score = 0; // Current score
+    var highScore = 0; // Current high score
+    var totalVector = 3; // Total goal ball vector (only used to detemine goal ball starting angle)
 
     function landscapeCheck() {
             if (window.innerHeight < innerWidth) {
@@ -91,36 +92,30 @@
     landscapeCheck();
     window.addEventListener('resize', landscapeCheck)
 
-    function tick() {
+    function tick() { // run every 4ms
+        getPageSize();
+        xVel += xGyro / 100;
+        yVel += yGyro / 100;
 
-            getPageSize();
-            xVel += xGyro / 100;
-            yVel += yGyro / 100;
-    
-            if (xVel > speedLimit) {
-                xVel = speedLimit
-            }
-            if (xVel < -speedLimit) {
-                xVel = -speedLimit
-            }
-            if (yVel > speedLimit) {
-                yVel = speedLimit
-            }
-            if (yVel < -speedLimit) {
-                yVel = -speedLimit
-            }
-            
+        if (xVel > speedLimit) {
+            xVel = speedLimit
+        }
+        
+        if (xVel < -speedLimit) {
+            xVel = -speedLimit
+        }
 
+        if (yVel > speedLimit) {
+            yVel = speedLimit
+        }
 
-
-
-
-
-
-
-            if (!((xPos + xVel) > pageXMax || (xPos + xVel) < pageXMin)) {
+        if (yVel < -speedLimit) {
+            yVel = -speedLimit
+        }
+        
+        if (!((xPos + xVel) > pageXMax || (xPos + xVel) < pageXMin)) {
             xPos += xVel
-            } else {
+        } else {
             if ((xPos + xVel) > pageXMax) {
                 xPos = pageXMax
                 xVel = -xVel * bounce;
@@ -128,11 +123,11 @@
                 xPos = pageXMin
                 xVel = -xVel * bounce;
             }
-            }
-            
-            if (!((yPos + yVel) > pageYMax || (yPos + yVel) < pageYMin)) {
+        }
+        
+        if (!((yPos + yVel) > pageYMax || (yPos + yVel) < pageYMin)) {
             yPos += yVel
-            }  else {   
+        }  else {   
             if ((yPos + yVel) > pageYMax) {
                 yPos = pageYMax
                 yVel = -yVel * bounce;
@@ -140,26 +135,15 @@
                 yPos = pageYMin
                 yVel = -yVel * bounce;
             }
-            }
-            
-    
-            
-            
-
-            document.getElementById("ball").style.left = xPos + "px";
-            document.getElementById("ball").style.top = yPos + "px";
-    }
-
-    function getPageSize() {
-            pageXMax = window.innerWidth - (heightAndWidth / 2) - 5
-            pageXMin = (heightAndWidth / 2) + 5
-            pageYMax = window.innerHeight - (heightAndWidth / 2) - 5
-            pageYMin = (heightAndWidth / 2) + 5
+        }
+        
+        document.getElementById("ball").style.left = xPos + "px";
+        document.getElementById("ball").style.top = yPos + "px";
     }
 
     function handleOrientation(event) {
-            yGyro = event.beta;
-            xGyro = event.gamma;
+        yGyro = event.beta;
+        xGyro = event.gamma;
     }
 
     window.addEventListener("deviceorientation", handleOrientation)
@@ -172,10 +156,10 @@
     setInterval(tick, 4)
 
     function moveGoal() {
-            getPageSize();
-            if (!((goalXPos + goalXVel) > pageXMax || (goalXPos + goalXVel) < pageXMin)) {
-            goalXPos += goalXVel
-            } else {
+        getPageSize();
+        if (!((goalXPos + goalXVel) > pageXMax || (goalXPos + goalXVel) < pageXMin)) {
+        goalXPos += goalXVel
+        } else {
             if ((goalXPos + goalXVel) > pageXMax) {
                 goalXPos = pageXMax
                 goalXVel = -goalXVel
@@ -183,11 +167,11 @@
                 goalXPos = pageXMin
                 goalXVel = -goalXVel
             }
-            }
-            
-            if (!((goalYPos + goalYVel) > pageYMax || (goalYPos + goalYVel) < pageYMin)) {
-            goalYPos += goalYVel
-            } else {
+        }
+        
+        if (!((goalYPos + goalYVel) > pageYMax || (goalYPos + goalYVel) < pageYMin)) {
+        goalYPos += goalYVel
+        } else {
             if ((goalYPos + goalYVel) > pageYMax) {
                 goalYPos = pageYMax
                 goalYVel = -goalYVel
@@ -195,18 +179,18 @@
                 goalYPos = pageYMin
                 goalYVel = -goalYVel
             }
-            }
+        }
 
-            document.getElementById("goal").style.top = goalYPos + "px";
-            document.getElementById("goal").style.left = goalXPos + "px";
-            
+        document.getElementById("goal").style.top = goalYPos + "px";
+        document.getElementById("goal").style.left = goalXPos + "px";
+        
     }
 
     function getPageSize() {
-            pageXMax = window.innerWidth - (300 / 2) - 5
-            pageXMin = (300 / 2) + 5
-            pageYMax = window.innerHeight - (300 / 2) - 5
-            pageYMin = (300 / 2) + 5 + 150
+        pageXMax = window.innerWidth - (300 / 2) - 5
+        pageXMin = (300 / 2) + 5
+        pageYMax = window.innerHeight - (300 / 2) - 5
+        pageYMin = (300 / 2) + 5 + 150
     }
 
     goalXPos = Math.floor(Math.random() * window.innerWidth)
@@ -218,37 +202,36 @@
 
     setInterval(moveGoal, 4)
 
-    var totalVector = 3;
+    
 
     goalXVel = totalVector * Math.cos(Math.floor(Math.random() * 359 + 1) * Math.PI / 180);
     goalYVel = Math.sqrt(totalVector * totalVector - goalXVel * goalXVel);
 
 
     function detectCollision() {
-            var dx = xPos - goalXPos;
-            var dy = yPos - goalYPos;
-            var dist = Math.sqrt(dx * dx + dy * dy)
-            if (dist < 300) {
-                score += 1;
-                document.getElementById("score").innerHTML = score;
-                if (score > highScore) {
-                    highScore = score;
-                    document.getElementById("highScore").innerHTML = score;
-                    
-                }
-                return true;
-            } else {
-                score = 0;
-                return false;
+        var dx = xPos - goalXPos;
+        var dy = yPos - goalYPos;
+        var dist = Math.sqrt(dx * dx + dy * dy)
+        if (dist < 300) {
+            score += 1;
+            document.getElementById("score").innerHTML = score;
+            if (score > highScore) {
+                highScore = score;
+                document.getElementById("highScore").innerHTML = score;
             }
+            return true;
+        } else {
+            score = 0;
+            return false;
+        }
     }
 
     function changeColor() {
-            if (detectCollision()) {
-                document.bgColor = "aquamarine";
-            } else {
-                document.bgColor = "azure";
-            }
+        if (detectCollision()) {
+            document.bgColor = "aquamarine";
+        } else {
+            document.bgColor = "azure";
+        }
     }
 
     setInterval(changeColor, 10)
