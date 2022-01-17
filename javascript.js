@@ -84,8 +84,6 @@ function changeToAce() {
 // generate card and number for player and adds to player score, checks for player instant lose
 function playerHit() {
 
-      document.getElementById("aceButton").style.visibility = "hidden";
-
       if (denyPlayerMoves == false) {
             var cardPlayerPicked = cardGen();
             playerScore += cardPlayerPicked; // runs cardGen which returns number, and also creates card
