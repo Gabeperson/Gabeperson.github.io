@@ -28,18 +28,34 @@
 
     .scores {
         color: black;
-        font-size: 50px;
+        font-size: 55px;
+    }
+
+    #score-box {
+        border-style: solid;
+        border-color: black;
+        height: 147px;
+        width: calc(100vw - 6px);
+        border-width: 3px;
+        background-color: darkgray;
+        position: absolute;
+        left: 0px;
+        top: 0px;
     }
 </style>
 
 <!--Detect landscape-->
-<p id="announcement" style="color: red; font-weight: bold;"></p>
-<span class="scores" style="font-weight: bold;">Score: </span>
-<span class="scores" id="score">0</span>
-<span class="scores" style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;High Score: </span>
-<span class="scores" id="highScore">0</span>
+<div id="score-box">
+    <p id="announcement" style="color: red; font-weight: bold;"></p>
+    <span class="scores" style="font-weight: bold;">Score: </span>
+    <span class="scores" id="score">0</span>
+    <span class="scores" style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;High Score: </span>
+    <span class="scores" id="highScore">0</span>
+</div>
+
 <div id="goal"></div>
 <div id="ball"></div>
+
 
 
 
