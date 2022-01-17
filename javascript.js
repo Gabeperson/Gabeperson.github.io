@@ -23,7 +23,8 @@ function reset() {
       computerPoints = 0; // reset computer points
       updatePoints(); // update points
       cardsPicked = []; // reset card picked array
-      document.getElementById("thinkingText").style.visibility = "hidden"; // reset thinking text
+      document.getElementById("thinkingText").style.visibility = "hidden"; // reset thinking text'
+      document.getElementById("aceButton").style.visibility = "hidden"; // reset ace button
 
 }
 
@@ -83,7 +84,7 @@ function changeToAce() {
 // generate card and number for player and adds to player score, checks for player instant lose
 function playerHit() {
 
-      document.getElementById("aceButton").visibility = "hidden";
+      document.getElementById("aceButton").style.visibility = "hidden";
 
       if (denyPlayerMoves == false) {
             var cardPlayerPicked = cardGen();
@@ -106,6 +107,7 @@ function playerHit() {
 // starts the recursion for computer picking cards after setting card position values to default
 function computerHit() {
 
+      document.getElementById("aceButton").style.visibility = "hidden";
       if (denyPlayerMoves == false) { // only run if denyPlayerMoves is false to prevent running recursion function multiple times
             document.getElementById("thinkingText").style.visibility = "visible"; // display the thinking text for computer
             denyPlayerMoves = true; // set denyPlayerMoves to true to prevent parallel recursion function runs
