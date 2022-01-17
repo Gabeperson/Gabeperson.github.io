@@ -218,8 +218,10 @@
 
     setInterval(moveGoal, 4)
 
-    goalXVel = 1.5;
-    goalYVel = 1.3;
+    var totalVector = 3;
+
+    goalXVel = totalVector * Math.cos(Math.floor(Math.random() * 359 + 1) * Math.PI / 180);
+    goalYVel = Math.sqrt(totalVector * totalVector - goalXVel * goalXVel);
 
 
     function detectCollision() {
