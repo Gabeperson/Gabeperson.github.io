@@ -166,6 +166,7 @@ function restart() {
       document.getElementById("announcements").innerHTML = "";
       document.getElementById("hitCircle").style.visibility = "visible";
       document.getElementById("standCircle").style.visibility = "visible";
+      document.getElementById("aceButton").style.visibility = "hidden";
 
 }
 
