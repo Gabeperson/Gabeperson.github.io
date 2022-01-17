@@ -70,12 +70,30 @@ function gameEndScreen() {
 
 }
 
+function changeToAce() {
+      playerScore += 10;
+      document.getElementById("aceButton").style.visibility = "hidden";
+      document.getElementById("playerScore").innerHTML = playerScore; // updates player score
+      if (playerScore > 21) {
+            gameEnd("lose"); // player loses game if they pick higher than 21
+      }
+
+}
+
 // generate card and number for player and adds to player score, checks for player instant lose
 function playerHit() {
 
+      document.getElementById("aceButton").visibility = "hidden";
+
       if (denyPlayerMoves == false) {
-            playerScore += cardGen(); // runs cardGen which returns number, and also creates card
-            document.getElementById("playerScore").value = playerScore; // updates player score
+            var cardPlayerPicked = cardGen();
+            playerScore += cardPlayerPicked; // runs cardGen which returns number, and also creates card
+            document.getElementById("playerScore").innerHTML = playerScore; // updates player score
+
+            if (cardPlayerPicked == 1) {
+                  document.getElementById("aceButton").style.visibility = "visible";
+            }
+            
 
             if (playerScore > 21) {
                   gameEnd("lose"); // player loses game if they pick higher than 21
@@ -102,9 +120,14 @@ function computerHit() {
 function computerRecursion() {
 
       if (playerScore > computerScore || (playerScore == computerScore && playerScore <= 11)) {
-            computerScore += cardGen(); // runs cardGen which returns number, and also creates card
-            document.getElementById("computerScore").value = computerScore; // updates computer score
-            
+            var cardComputerPicked = cardGen();
+            computerScore += cardComputerPicked; // runs cardGen which returns number, and also creates card
+            if (cardComputerPicked == 1 && 10 + computerScore < 22) {
+                  computerScore += 10;
+
+            }
+            document.getElementById("computerScore").innerHTML = computerScore; // updates computer score
+
             if (!(playerScore > computerScore || (playerScore == computerScore && playerScore <= 11))) {
 
                   if (computerScore == playerScore) {
@@ -137,8 +160,8 @@ function restart() {
       yCoord = 0;
       denyPlayerMoves = false;
       removeObjects();
-      document.getElementById("computerScore").value = "";
-      document.getElementById("playerScore").value = "";
+      document.getElementById("computerScore").innerHTML = "";
+      document.getElementById("playerScore").innerHTML = "";
       document.getElementById("next").style.visibility = "hidden";
       document.getElementById("announcements").innerHTML = "";
       document.getElementById("hitCircle").style.visibility = "visible";

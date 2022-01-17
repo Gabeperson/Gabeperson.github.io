@@ -5,7 +5,7 @@ body {
       -ms-user-select: none;
       -webkit-user-drag: none;
       -webkit-user-select: none;
-      background-color: aquamarine;
+      background-color: green;
       user-select: none;
 }
 
@@ -26,23 +26,29 @@ body {
       position: absolute;
       top: 4vh; 
       transform: translate(-50%,-50%);
+      color: white;
+      text-shadow: 0 0 7px rgb(50,50,50);
 }
 
 /* styling for score boxes*/
 .score-box {
-      font-size: 1.5vw;
+      font-size: calc(1.5vw + 1.5vh);
       position: absolute;
       text-align: center;
       top: 60vh;
       transform: translate(-50%,-50%);
+      background-color: white;
+      width: 15vw;
+      height: 6vh;
+      line-height: 5vh;
 }
 
 /* styling for reset button */
 .reset {
-      background: rgb(227,227,227);
+      background: rgb(240,240,240);
       color: red;
       font-size: calc(1vh + 0.7vw);
-      height: 6vh;
+      height: 8vh;
       left: 50vw;
       position: absolute;
       top: 60vh;
@@ -79,15 +85,16 @@ body {
 
 /* styling for announcements text */
 #announcements {
-      color: black;
+      color: white;
       font-size: calc(5vh + 4vw);
       font-weight: 5px;
       left: 50vw;
       position: absolute;
       text-align: center;
-      top: 70vh;
+      top: 73vh;
       transform: translate(-50%,-50%);
       vertical-align: middle;
+      text-shadow: 0 0 10px rgb(80, 80, 80);
 }
 
 #announcements2 {
@@ -101,6 +108,10 @@ body {
       transform: translate(-50%,-50%);
       vertical-align: middle;
       visibility: hidden;
+      background-color: rgb(240,240,240); 
+      border-style: solid;
+      border-color: gray;
+      border-width: 2px;
 }
 
 /* styling for player and computer points */
@@ -108,7 +119,9 @@ body {
       font-size: 1.5vw;
       position: absolute;
       top: 8vh; 
-      transform: translate(-50%,-50%)
+      transform: translate(-50%,-50%);
+      text-shadow: 0 0 7px rgb(50,50,50);
+      color: white;
 }
 
 /* styling for hit and stand Buttons */
@@ -116,20 +129,22 @@ body {
       -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* IE10+/Edge */
       -webkit-user-select: none; /* Safari */        
-      background-color: #99FF99;
-      border-radius: 50%;
-      border-width: thin;
-      border: solid green;
+      background-color: rgb(240,240,240);
+      border-radius: 5px;
+      border-width: 4px;
+      border: solid;
+      border-color: black;
       font-size: calc(10vw / 4);
-      height: calc(7vw + 9vh);
-      width: calc(7vw + 9vh);
-      line-height: calc(( 5vw + 5vh ) / 0.7);
+      height: calc(20vh);
+      width: calc(20vw);
+      line-height: 20vh;
       position: fixed;
       text-align: center;
       top: 84vh;
       transform: translate(-50%,-50%);
       user-select: none; /* Standard */
       vertical-align: middle;    
+      
 }
 
 .button:hover {
@@ -137,7 +152,7 @@ body {
 }
 
 .button:hover:active {
-      background-color: #55FF55;
+      background-color: gray;
 }
 
 /* styling and animations for card flipping */
@@ -187,6 +202,53 @@ index.html styling (for buttons)
       border-width: 3px;
       text-align: center;
       line-height: 10vh;
-      color: white;
-      background-color: darkGrey;
+      color: black;
+      background-color: lightgray;
+      text-shadow: 0 0 20px gray;
 }
+
+/* Blackjack big text in index*/
+#blackjackText {
+      font-size: calc(6vh + 7vw);
+      color: white;
+      text-shadow: 0 0 50px rgb(50,50,50);
+      position: absolute;
+      top: 30vh;
+      left: 50vw;
+      transform: translate(-50%,-50%)
+      
+}
+
+/*Ace button*/
+.ace-button {
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      -webkit-user-select: none; /* Safari */        
+      background-color: rgb(240,240,240);
+      border-radius: 5px;
+      border-width: 4px;
+      border: solid;
+      border-color: black;
+      font-size: calc(6vw / 6);
+      height: 6vh;
+      width: 10vw;
+      line-height: 5vh;
+      position: fixed;
+      text-align: center;
+      top: 50vh;
+      transform: translate(-50%,-50%);
+      user-select: none; /* Standard */
+      vertical-align: middle;    
+      left: 37vw;
+      visibility: hidden;
+}
+
+.ace-button:hover {
+      cursor: pointer;
+}
+
+.ace-button:hover:active {
+      background-color: gray;
+}
+
+

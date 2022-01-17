@@ -12,11 +12,11 @@ Add height AND width scaling to all elements using css
 
 <div class="names" style="left: 37vw;">Player:</div> <!-- display the name "Player" -->
 
-<input type="text" id="playerScore" class="score-box" size="15" style="left:37vw;" readonly> <!-- display player score -->
+<div id="playerScore" class="score-box" style="left:37vw;"></div> <!-- display player score -->
 
 <div class="names" style="left: 63vw;">Computer:</div> <!-- display the name "Computer" -->
 
-<input type="text" id="computerScore" class="score-box" size="15" style="left:63vw;" readonly> <!-- display computer score -->
+<div id="computerScore" class="score-box" style="left:63vw;"></div> <!-- display computer score -->
 
 <input type="button" id="reset" value="Reset" onClick="reset();" class="reset"> <!-- reset button -->
 
@@ -37,7 +37,11 @@ color: darkslategrey; visibility: hidden;">Thinking...</div> <!-- thinking text 
 
 <div class="button" id="hitCircle" onClick="playerHit();" style="left: 37vw;">Hit</div> <!-- display hit button -->
 
+<div class="ace-button" id="aceButton" onClick="changeToAce();">Ace = 11</div>
+
 <script src="javascript.js"></script> <!-- load javascript file -->
+
+
 
 <script>
 
