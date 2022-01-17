@@ -23,7 +23,7 @@ function reset() {
       computerPoints = 0; // reset computer points
       updatePoints(); // update points
       cardsPicked = []; // reset card picked array
-      document.getElementById("thinkingText").style.visibility = "hidden"; // reset thinking text'
+      document.getElementById("thinkingText").style.visibility = "hidden"; // reset thinking text
       document.getElementById("aceButton").style.visibility = "hidden"; // reset ace button
 
 }
@@ -31,8 +31,8 @@ function reset() {
 // updates player and computer points
 function updatePoints() {
 
-      document.getElementById('playerPoints').innerHTML = "Points: " + playerPoints; // update player points
-      document.getElementById('computerPoints').innerHTML = "Points: " + computerPoints; // update computer points
+      document.getElementById("playerPoints").innerHTML = "Points: " + playerPoints; // update player points
+      document.getElementById("computerPoints").innerHTML = "Points: " + computerPoints; // update computer points
 
 }
 
