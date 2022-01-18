@@ -45,7 +45,7 @@
 </style>
 
 <!--Detect landscape-->
-<div id="score-box">
+<div id="score-box" onClick="resetScore();">
     <p id="announcement" style="color: red; font-weight: bold;"></p>
     <span class="scores" style="font-weight: bold;">&nbsp;&nbsp;&nbsp;Score: </span>
     <span class="scores" id="score">0</span>
@@ -86,6 +86,11 @@
         document.getElementById("highScore").innerHTML = highScore;
     }
     
+    function resetScore() {
+        highScore = 0;
+        document.getElementById("highScore").innerHTML = 0;
+    }
+
     console.log(highScore)
     var totalVector = 3; // Total goal ball vector (only used to detemine goal ball starting angle)
 
