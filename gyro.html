@@ -83,7 +83,9 @@
         var highScore = 0;
     } else {
         var highScore = parseInt(localStorage.highScoreCloud);
+        document.getElementById("highScore").innerHTML = highScore;
     }
+    
     console.log(highScore)
     var totalVector = 3; // Total goal ball vector (only used to detemine goal ball starting angle)
 
@@ -223,7 +225,7 @@
             if (score > highScore) {
                 highScore = score;
                 localStorage.highScoreCloud = highScore;
-                document.getElementById("highScore").innerHTML = score;
+                document.getElementById("highScore").innerHTML = highScore;
             }
             return true;
         } else {
