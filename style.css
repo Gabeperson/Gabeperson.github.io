@@ -5,7 +5,7 @@ body {
       -ms-user-select: none;
       -webkit-user-drag: none;
       -webkit-user-select: none;
-      background-color: green;
+      background-color: darkgreen;
       user-select: none;
 }
 
