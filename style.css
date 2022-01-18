@@ -203,8 +203,8 @@ index.html styling (for buttons)
       text-align: center;
       line-height: 10vh;
       color: black;
-      background-color: lightgray;
-      text-shadow: 0 0 20px gray;
+      background-color: white;
+      text-shadow: 0 0 20px lightgray;
 }
 
 /* Blackjack big text in index*/
