@@ -79,10 +79,9 @@
     var goalXVel = 0; // Goal ball X velocity
     var goalYVel = 0; // Goal ball Y velocity
     var score = 0; // Current score
-    if (localStorage.highScoreCloud === undefined) {
-        var highScore = 0; // Current high score
-    } else {
-        var highScore = parseInt(localStorage.highScoreCloud);
+    var highScore = parseInt(localStorage.highScoreCloud);
+    if (highScore === undefined) {
+        highScore = 0;
     }
     var totalVector = 3; // Total goal ball vector (only used to detemine goal ball starting angle)
 
