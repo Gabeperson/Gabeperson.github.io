@@ -2,8 +2,6 @@
 // defines variables for use in the game
 var playerScore = 0; // player score for current round
 var computerScore = 0; // computer score for current round
-var playerPoints = 0; // rounds player has won
-var computerPoints = 0; // rounds computer has won
 var xCoord = 0; // variable for calculating card x position
 var yCoord = 0; // variable for calculating card y position
 var denyPlayerMoves = false; // variable for prevention of spamming the stand button
@@ -12,6 +10,21 @@ const suits = ["hearts", "diamonds", "spades", "clubs"]; // array for picking su
 var cardsPicked = []; // array for listing all cards picked
 var timer; // timeout variable for computer card picking
 var timer2; // timeout variable for win/loss/tie
+
+if (localStorage.playerPointsStorage === undefined) { // grab localStorage player points
+      var playerPoints = 0;
+} else {
+      var playerPoints = parseInt(localStorage.playerPointsStorage);
+}
+
+if (localStorage.computerPointsStorage === undefined) { // grab localStorage computer points
+      var computerPoints = 0;
+} else {
+      var computerPoints = parseInt(localStorage.computerPointsStorage);
+}
+
+
+
 
 // resets the game to initial state
 function reset() {
@@ -25,6 +38,8 @@ function reset() {
       cardsPicked = []; // reset card picked array
       document.getElementById("thinkingText").style.visibility = "hidden"; // reset thinking text
       document.getElementById("aceButton").style.visibility = "hidden"; // reset ace button
+      localStorage.computerPointsStorage = 0; // reset locally stored computer points
+      localStorage.playerPointsStorage = 0; // reset locally stored player points
 
 }
 
@@ -46,15 +61,19 @@ function gameEnd(state) {
       if (state == "win") {
             document.getElementById("announcements").innerHTML = "You Won!"; // change announcement text
             playerPoints += 1;
+            localStorage.playerPointsStorage = playerPoints;
             gameEndScreen();
       } else if (state == "lose") {
             document.getElementById("announcements").innerHTML = "You Lost!"; // change announcement text
             computerPoints += 1;
+            localStorage.computerPointsStorage = computerPoints;
             gameEndScreen();
       } else if (state == "tie") {
             document.getElementById("announcements").innerHTML = "You Tied!"; // change announcement text
             playerPoints += 0.5;
             computerPoints += 0.5;
+            localStorage.playerPointsStorage = playerPoints;
+            localStorage.computerPointsStorage = computerPoints;
             gameEndScreen();
       }
 
@@ -293,3 +312,5 @@ function cardGen() {
       return numb;
 
 }
+
+updatePoints(); // update points that were grabbed from local storage
