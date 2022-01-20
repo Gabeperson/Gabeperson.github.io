@@ -79,6 +79,25 @@
     var goalXVel = 0; // Goal ball X velocity
     var goalYVel = 0; // Goal ball Y velocity
     var score = 0; // Current score
+
+    var permissionTest = false;
+
+
+    function requestPermission() {
+        if (permissionTest == false) {
+            permissionTest = true;
+            DeviceOrientationEvent.requestPermission()
+            .then(response => {
+            if (response == 'granted') {
+                window.addEventListener('deviceorientation', (e) => {
+                // do something with e
+                })
+            }
+            })
+            .catch(console.error)
+        }
+    }
+
     if (localStorage.highScoreCloud === undefined) {
         var highScore = 0;
     } else {
