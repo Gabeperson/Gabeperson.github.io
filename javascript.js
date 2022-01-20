@@ -10,6 +10,8 @@ const suits = ["hearts", "diamonds", "spades", "clubs"]; // array for picking su
 var cardsPicked = []; // array for listing all cards picked
 var timer; // timeout variable for computer card picking
 var timer2; // timeout variable for win/loss/tie
+var playerMoney = 1000;
+var player_bet = 0;
 
 if (localStorage.playerPointsStorage === undefined) { // grab localStorage player points
       var playerPoints = 0;
@@ -23,6 +25,18 @@ if (localStorage.computerPointsStorage === undefined) { // grab localStorage com
       var computerPoints = parseInt(localStorage.computerPointsStorage);
 }
 
+
+function bet() {
+      var playerBet = "placeholder";
+      while (parseInt(playerBet) > playerMoney || isNaN(playerBet) || playerBet == null || playerBet == "") {
+            playerBet = prompt("Please enter a valid betting amount. You currently have $" + playerMoney)
+      }
+
+      playerMoney -= playerBet
+      alert("Your bet of $" + playerBet + " has been placed. You have $" + playerMoney + " remaining.")
+      
+      player_bet = playerBet
+}
 
 
 
@@ -40,7 +54,8 @@ function reset() {
       document.getElementById("aceButton").style.visibility = "hidden"; // reset ace button
       localStorage.computerPointsStorage = 0; // reset locally stored computer points
       localStorage.playerPointsStorage = 0; // reset locally stored player points
-
+      playerMoney = 1000;
+      bet();
 }
 
 // updates player and computer points
@@ -62,11 +77,13 @@ function gameEnd(state) {
             document.getElementById("announcements").innerHTML = "You Won!"; // change announcement text
             playerPoints += 1;
             localStorage.playerPointsStorage = playerPoints;
+            gameEndMoney("win");
             gameEndScreen();
       } else if (state == "lose") {
             document.getElementById("announcements").innerHTML = "You Lost!"; // change announcement text
             computerPoints += 1;
             localStorage.computerPointsStorage = computerPoints;
+            gameEndMoney("lose");
             gameEndScreen();
       } else if (state == "tie") {
             document.getElementById("announcements").innerHTML = "You Tied!"; // change announcement text
@@ -74,7 +91,27 @@ function gameEnd(state) {
             computerPoints += 0.5;
             localStorage.playerPointsStorage = playerPoints;
             localStorage.computerPointsStorage = computerPoints;
+            gameEndMoney("tie");
             gameEndScreen();
+      }
+
+}
+
+function gameEndMoney(state) {
+      var moneyBox = document.getElementById("moneyBox");
+      if (state == "lose") {
+            moneyBox.innerHTML = "You have lost $" + player_bet
+            moneyBox.style.visibility = "visible";
+      }
+      if (state == "win") {
+            moneyBox.innerHTML = "You have won $" + player_bet
+            moneyBox.style.visibility = "visible";
+            playerMoney += 2 * parseInt(player_bet)
+      }
+      if (state == "tie") {
+            moneyBox.innerHTML = "You have received $" + player_bet + " back"
+            moneyBox.style.visibility = "visible";
+            playerMoney += parseInt(player_bet)
       }
 
 }
@@ -86,7 +123,7 @@ function gameEndScreen() {
       updatePoints();
       document.getElementById("next").style.visibility = "visible"; // display next round button
       document.getElementById("hitCircle").style.visibility = "hidden"; // hide hit button
-      document.getElementById("standCircle").style.visibility = "hidden"; // hide stand button
+      document.getElementById("standCircle").style.visibility = "hidden"; // hide stand button  
 
 }
 
@@ -171,6 +208,7 @@ function computerRecursion() {
 }
 
 // sets all required variable values to default for another round
+// also sets all required element visibility and innerHTMl
 function restart() {
 
       playerScore = 0;
@@ -186,7 +224,14 @@ function restart() {
       document.getElementById("hitCircle").style.visibility = "visible";
       document.getElementById("standCircle").style.visibility = "visible";
       document.getElementById("aceButton").style.visibility = "hidden";
-
+      document.getElementById("moneyBox").style.visibility = "hidden"; // hide money announcement
+      if (playerMoney == 0) {
+            document.body.visibility = "hidden";
+            document.getElementById("announcements").visibility = "visible";
+            document.getElementById("announcements").innerHTML = "You lost all your money and was kicked out!";
+      }
+      bet();
+      
 }
 
 // function used to check where to place card for cardGen() function
@@ -251,7 +296,8 @@ function drawCard(suit, number) {
       document.body.before(div1);
       
       flip() // flip the card
-      document.getElementById("flipThis").id = Math.random().toString(36).slice(2); // generate random id for element and set div2 id to it
+      document.getElementById("flipThis").id = Math.random().toString(36).slice(2); // generate random id for element and set div2 id to it.
+      // javascript random seeding algorithm makes it so that all ids generated are actually random, and will not repeat
 
       // wraparound code
       xCoord++;
@@ -314,3 +360,5 @@ function cardGen() {
 }
 
 updatePoints(); // update points that were grabbed from local storage
+
+setTimeout(bet, 30);
