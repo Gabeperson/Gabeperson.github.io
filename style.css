@@ -73,7 +73,7 @@ body {
       height: 8vh;
       left: 50vw;
       position: absolute;
-      top: 90vh;
+      top: 85vh;
       transform: translate(-50%,-50%);
       visibility: hidden;
       width: 20vw;
@@ -251,15 +251,4 @@ index.html styling (for buttons)
       background-color: gray;
 }
 
-.money-box {
-      color: white;
-      font-size: calc(1vh + 1vw);
-      height: 8vh;
-      left: 50vw;
-      position: absolute;
-      top: 85vh;
-      transform: translate(-50%,-50%);
-      visibility: hidden;
-      width: 20vw;
-      text-align: center;
-}
+
