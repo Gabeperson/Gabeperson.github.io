@@ -1,3 +1,42 @@
+/* 
+
+EXTRAS (They are marked with the text "EXTRA THING". ctrl + f should be able to find them)
+EXCEPT for #8, search for "denyplayermoves"
+
+
+#1 
+Store player and computer points so that they persist through reloads of the page
+
+#2
+If player picks an ace card, they are able to change its value to 11
+
+#3
+Adds delay to computer's picking time, that is "random" (configurable), so that it feels more realistic
+than the computer instantly picking
+
+#4
+Flips the card when showing it, and also stacks them on top of each other for great visual appeal for the game
+
+#5
+Make an actual deck for the game so that duplicate cards can't be drawn until the cards are reshuffled or the reset button is pressed
+Also persists through reloads so you can continue playing the game if you memorized the cards
+
+#6
+Stop players from reloading over and over to get an incredibly good hand. Reloading only returns your hand
+
+#7 (not as hard as other ones)
+Don't use a single alert, confirm, or prompt in the code, so that no breaking of 
+gameplay loop is staged. Everything flows smoothly and is always interactable
+
+#8 (search for denyplayermoves)
+Stops player from pressing stand button multiple times or pressing hit button during the computer's turn
+
+
+
+*/
+
+
+
 
 // defines variables for use in the game
 var playerScore = 0; // player score for current round
@@ -7,10 +46,23 @@ var yCoord = 0; // variable for calculating card y position
 var denyPlayerMoves = false; // variable for prevention of spamming the stand button
 const delays = [400, 700, 1000, 1300, 1500]; // configurable array for computer card picking delay
 const suits = ["hearts", "diamonds", "spades", "clubs"]; // array for picking suits
-var cardsPicked = []; // array for listing all cards picked
 var timer; // timeout variable for computer card picking
 var timer2; // timeout variable for win/loss/tie
 
+
+// supporting code for blocking reload abuse
+if (localStorage.playerHandCloud == undefined || localStorage.playerHandCloud == "undefined") { // grab localStorage player hand
+      var playerHand = [];
+} else {
+      var playerHand = JSON.parse(localStorage.playerHandCloud)
+}
+
+
+
+// EXTRA THING
+// More code in functions below to support
+// Stores player and computer points so that they can continue
+// through reloads of the page.
 if (localStorage.playerPointsStorage === undefined) { // grab localStorage player points
       var playerPoints = 0;
 } else {
@@ -21,6 +73,12 @@ if (localStorage.computerPointsStorage === undefined) { // grab localStorage com
       var computerPoints = 0;
 } else {
       var computerPoints = parseInt(localStorage.computerPointsStorage);
+}
+
+if (localStorage.deckCloud == undefined || localStorage.playerHandCloud == "undefined") { // grab localStorage current deck
+      var cardsPicked = []; // array for listing all cards picked
+} else {
+      var cardsPicked = JSON.parse(localStorage.deckCloud);
 }
 
 
@@ -36,11 +94,13 @@ function reset() {
       computerPoints = 0; // reset computer points
       updatePoints(); // update points
       cardsPicked = []; // reset card picked array
+      localStorage.deckCloud = "undefined"; // reset deck localStorage
       document.getElementById("thinkingText").style.visibility = "hidden"; // reset thinking text
       document.getElementById("aceButton").style.visibility = "hidden"; // reset ace button
       localStorage.computerPointsStorage = 0; // reset locally stored computer points
       localStorage.playerPointsStorage = 0; // reset locally stored player points
-
+      playerHand = [];
+      localStorage.playerHandCloud = undefined;
 }
 
 // updates player and computer points
@@ -87,9 +147,12 @@ function gameEndScreen() {
       document.getElementById("next").style.visibility = "visible"; // display next round button
       document.getElementById("hitCircle").style.visibility = "hidden"; // hide hit button
       document.getElementById("standCircle").style.visibility = "hidden"; // hide stand button
+      localStorage.playerHandCloud = undefined;
 
 }
 
+// EXTRA THING
+// allows player to change ace cards to a value of 11, like real blackjack
 function changeToAce() {
       playerScore += 10;
       document.getElementById("aceButton").style.visibility = "hidden";
@@ -103,7 +166,8 @@ function changeToAce() {
 // generate card and number for player and adds to player score, checks for player instant lose
 function playerHit() {
 
-      if (denyPlayerMoves == false) {
+
+      if (denyPlayerMoves == false) { // only allow running if it is player's turn
             var cardPlayerPicked = cardGen();
             playerScore += cardPlayerPicked; // runs cardGen which returns number, and also creates card
             document.getElementById("playerScore").innerHTML = playerScore; // updates player score
@@ -123,7 +187,6 @@ function playerHit() {
 
 // starts the recursion for computer picking cards after setting card position values to default
 function computerHit() {
-
       document.getElementById("aceButton").style.visibility = "hidden";
       if (denyPlayerMoves == false) { // only run if denyPlayerMoves is false to prevent running recursion function multiple times
             document.getElementById("thinkingText").style.visibility = "visible"; // display the thinking text for computer
@@ -135,8 +198,10 @@ function computerHit() {
 
 }
 
-// recursion function for computer picking cards
-function computerRecursion() {
+// EXTRA THING
+// adds CONFIGURABLE delay to the computer's picking delay
+// configurable by changing the delays array
+function computerRecursion() { // recursion function for computer picking cards
 
       if (playerScore > computerScore || (playerScore == computerScore && playerScore <= 11)) {
             var cardComputerPicked = cardGen();
@@ -186,7 +251,8 @@ function restart() {
       document.getElementById("hitCircle").style.visibility = "visible";
       document.getElementById("standCircle").style.visibility = "visible";
       document.getElementById("aceButton").style.visibility = "hidden";
-
+      playerHand = [];
+      localStorage.playerHandCloud = undefined;
 }
 
 // function used to check where to place card for cardGen() function
@@ -208,16 +274,26 @@ function flip() {
 
 }
 
-// draws the card, every 5 cards, card wraps around. All cards styled, and attributes edited, then id is changed to random id.
-function drawCard(suit, number) {
+// EXTRA THING
+// card flipping
+// generates the card using img src and appends it to document body, then after that
+// flips the card in a realistic way
+function drawCard(suit, number) { // draws the card, every 5 cards, card wraps around. All cards styled, and attributes edited, then id is changed to random id.
+
+      // div 1 is outermost division for perspective changing
+      // div 2 is inner card that actually gets flipped
+      // div 3 is inside inner card and is visible right away, and when flip() is run, flips 180 degrees to disappear.
+      // div 4 is also inside inner card but is flipped 180 degrees, and when flip() is run, flips to show.
+      // backImg is backside image
+      // elem is frontside image
 
       // create elements and store them in variables
-      var div1 = document.createElement("div");
-      var div2 = document.createElement("div");
-      var div3 = document.createElement("div");
-      var div4 = document.createElement("div");
-      var backImg = document.createElement("img");
-      var elem = document.createElement("img");
+      var div1 = document.createElement("div"); // creates div 1
+      var div2 = document.createElement("div"); // creates div 2
+      var div3 = document.createElement("div"); // creates div 3
+      var div4 = document.createElement("div"); // creates div 4
+      var backImg = document.createElement("img"); // creates backside image
+      var elem = document.createElement("img"); // creates frontside image
 
       // add required classes, ids, styles for card flipping
       // div 1
@@ -226,16 +302,16 @@ function drawCard(suit, number) {
       // div 2
       div2.id = "flipThis";
       div2.classList.add("card-inner");
-      div2.style.left = 27 + xCoord * 2.6 + compTurnCheck() + "vw";
-      div2.style.top = 15 + yCoord * 6 + "vh";
+      div2.style.left = 27 + xCoord * 2.6 + compTurnCheck() + "vw"; // positions card differently depending on if computer turn or not
+      div2.style.top = 15 + yCoord * 6 + "vh"; // wraparound
       // div 3
       div3.classList.add("card-front");
       // card back
-      backImg.src = "deck/backside/backside3.png";
+      backImg.src = "deck/backside/backside3.png"; // pull source for backside image
       backImg.classList.add("card-image");
       backImg.setAttribute("draggable","false");
       // card front
-      elem.src = "deck/" + suit + "/" + number + ".png" ;
+      elem.src = "deck/" + suit + "/" + number + ".png" ; // navigates to correct card in folder and sets it as source
       elem.classList.add("card-image");
       elem.setAttribute("draggable","false");
       
@@ -248,11 +324,12 @@ function drawCard(suit, number) {
 
       
       // insert card into document body
-      document.body.before(div1);
+      document.body.append(div1);
       
       flip() // flip the card
       document.getElementById("flipThis").id = Math.random().toString(36).slice(2); // generate random id for element and set div2 id to it
-
+      // javascript rng seeding algorithm guarantees that ids cannot be duplicate.
+      
       // wraparound code
       xCoord++;
 
@@ -278,6 +355,12 @@ function removeObjects() {
 
 }
 
+// EXTRA THING: 
+// uses array to keep the deck that has been currently picked until now. This prevents duplicate card draws until
+// the deck is reshuffled
+// extra in the function marked with "EXTRA1"
+// ALSO PERSISTS THROUGH RELOADS
+
 // randomly generates a suit and a number
 // uses those to draw a card using cardGen()
 // returns the number, rounded down to 10 if over
@@ -290,20 +373,30 @@ function cardGen() {
       var suit = suits[Math.floor(Math.random() * 4)];
       var numb = Math.floor(Math.random() * 13) + 1;
 
+      // EXTRA1
       while (cardsPicked.includes(suit + numb)) {
             suit = suits[Math.floor(Math.random() * 4)];
             numb = Math.floor(Math.random() * 13) + 1;
       }
-
+      // EXTRA1
       cardsPicked.push(suit + numb);
-
+      localStorage.deckCloud = JSON.stringify(cardsPicked);
+      // EXTRA1
       if (cardsPicked.length == 52) {
             cardsPicked = [];
+            localStorage.deckCloud = "undefined";
             document.getElementById("announcements2").style.visibility = "visible";
             setTimeout(function () {document.getElementById("announcements2").style.visibility = "hidden";}, 3000);
       }
 
       drawCard(suit, numb);
+
+      if (denyPlayerMoves == false) { // localStorage for player hand
+            let playerHandNestedArray = [suit, numb]
+            playerHand.push(playerHandNestedArray)
+            localStorage.playerHandCloud = JSON.stringify(playerHand)
+      }
+
 
       if (numb > 10) {
             numb = 10;
@@ -314,3 +407,23 @@ function cardGen() {
 }
 
 updatePoints(); // update points that were grabbed from local storage
+
+// EXTRA THING
+// stop player from reloading to get a better hand for themself
+// reloading the page gives them the cards they picked before back into their hand, so they can't abuse the reload to get
+// the best hand every single time
+// Supporting code in the variables section
+for (let i = 0; i < playerHand.length; i++) { // stops player from being able to use window reload to get the best hand every single time.
+      let cardSuit = playerHand[i][0];
+      let cardNumber = playerHand[i][1];
+      drawCard(cardSuit, cardNumber);
+      if (cardNumber > 10) {
+            cardNumber = 10;
+      }
+      playerScore += cardNumber;
+      if (cardNumber == 1) {
+            document.getElementById("aceButton").style.visibility = "visible";
+      }
+     
+}
+document.getElementById("playerScore").innerHTML = playerScore; // updates player score
