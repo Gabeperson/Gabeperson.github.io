@@ -41,8 +41,8 @@ Stops player from pressing stand button multiple times or pressing hit button du
 // defines variables for use in the game
 var playerScore = 0; // player score for current round
 var computerScore = 0; // computer score for current round
-var xCoord = 0; // variable for calculating card x position
-var yCoord = 0; // variable for calculating card y position
+var xCoord = 0; // variable for calculating card x coordinate
+var yCoord = 0; // variable for calculating card y coordinate
 var denyPlayerMoves = false; // variable for prevention of spamming the stand button
 const delays = [400, 700, 1000, 1300, 1500]; // configurable array for computer card picking delay
 const suits = ["hearts", "diamonds", "spades", "clubs"]; // array for picking suits
