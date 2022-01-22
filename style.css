@@ -213,7 +213,7 @@ index.html styling (for buttons)
       color: white;
       text-shadow: 0 0 50px rgb(50,50,50);
       position: absolute;
-      top: 30vh;
+      top: 15vh;
       left: 50vw;
       transform: translate(-50%,-50%)
       
@@ -251,4 +251,17 @@ index.html styling (for buttons)
       background-color: gray;
 }
 
-
+#howtoplay {
+      background-color: white;
+      width: 40vw;
+      height: 35vh;
+      position: absolute;
+      transform: translate(-50%, 0%);
+      top: 60vh;
+      left: 50vw;
+      text-align: center;
+      border-style: solid;
+      border-color: gray;
+      border-width: 3px;
+      
+}
