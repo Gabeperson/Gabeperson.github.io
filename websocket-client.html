@@ -1,0 +1,51 @@
+
+<style>
+</style>
+
+<h1>Input 8 letter code here:</h1>
+<input id="input">
+<button id="connect">
+      Connect!
+</button>
+<button id="button">
+      Press to send data!
+</button>
+<script>
+      const button = document.getElementById("button");
+      const input = document.getElementById("input");
+      const connect = document.getElementById("connect");
+      var websocket;
+
+
+      var messageToSend = "Clicked!";
+
+      
+      button.addEventListener("click", function() {
+            const event = {
+                  data: messageToSend
+            }
+            websocket.send(JSON.stringify(event))
+      })
+
+
+      connect.addEventListener("click", function() {
+            let encodedIP = input.value;
+            let encodedIPArray = encodedIP.match(/.{1,2}/g);
+            var ip = []
+            for (i of encodedIPArray) {
+
+                  let firstPart = (i.charAt(0).toLowerCase().charCodeAt(0)-97)*16
+                  console.log(firstPart)
+                  let secondPart = (i.charAt(1).toLowerCase().charCodeAt(0)-97)
+                  console.log(secondPart)
+                  ip.push(firstPart+secondPart)
+            }
+            ip = ip.join(".")
+
+            websocket = new WebSocket("ws://" + ip + ":60000/");
+
+            
+
+      })
+
+</script>
