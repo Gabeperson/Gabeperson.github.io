@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<script src="eel.js"></script>
+<title>Sudoku Solver Gui Version</title>
+<style>
+	div {
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		flex-direction: column;
+		text-align: center;
+		border-style: solid;
+		font-size: 40px;
+		border-color: grey;
+		border-width: 1px;
+	}
+</style>
+<body></body>
+
+<script>
+	const keyList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+	var grid = [
+		[0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0],
+	];
+	const arrowList = ["ArrowLeft", "ArrowDown", "ArrowRight", "ArrowUp"];
+	var selected;
+	{
+		var size = "50px";
+		var table = document.createElement("table");
+		table.cellSpacing = 0.5;
+		table.border = 0;
+		table.cellPadding = 0;
+		for (var i = 0; i < 9; i++) {
+			let yDirection = document.createElement("tr");
+			for (var j = 0; j < 9; j++) {
+				let xDirection = document.createElement("td");
+				let div = document.createElement("div");
+				let p = document.createElement("p");
+				let id = i + "," + j;
+				div.id = id;
+				div.style.width = size;
+				div.style.height = size;
+				div.addEventListener("click", select);
+				xDirection.appendChild(div);
+				yDirection.appendChild(xDirection);
+			}
+			table.appendChild(yDirection);
+		}
+		document.body.appendChild(table);
+	}
+
+	var solved = false;
+
+	function possible(y, x, n) {
+		for (var i = 0; i < 9; i++) {
+			if (grid[y][i] == n) {
+				return false;
+			}
+		}
+		for (var j = 0; j < 9; j++) {
+			if (grid[j][x] == n) {
+				return false;
+			}
+		}
+		var x0 = Math.floor(x / 3) * 3;
+		var y0 = Math.floor(y / 3) * 3;
+		for (var k = 0; k < 3; k++) {
+			for (var l = 0; l < 3; l++) {
+				if (grid[y0 + k][x0 + l] == n) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	function solve() {
+		for (var y = 0; y < 9; y++) {
+			for (var x = 0; x < 9; x++) {
+				if (grid[y][x] == 0) {
+					for (var n = 1; n < 10; n++) {
+						if (possible(y, x, n)) {
+							grid[y][x] = n;
+							solve();
+							if (solved) {
+								return;
+							}
+							grid[y][x] = 0;
+						}
+					}
+					return;
+				}
+			}
+		}
+		solved = true;
+	}
+
+	function select() {
+		try {
+			document.getElementById(selected).style.backgroundColor = "white";
+		} catch {}
+		selected = this.id;
+		document.getElementById(this.id).style.backgroundColor = "#DDDDDD";
+	}
+
+	function unselect() {
+		document.getElementById(selected).style.backgroundColor = "white";
+		selected = undefined;
+	}
+
+	document.addEventListener("keydown", function (e) {
+		e = e || window.event;
+
+		if (keyList.includes(parseInt(e.key))) {
+			if (selected) {
+				let elem = document.getElementById(selected);
+				let idList = selected.split(",");
+				grid[idList[0]][idList[1]] = parseInt(e.key);
+				elem.innerHTML = e.key;
+				return;
+			}
+		}
+		if (e.key == "Backspace") {
+			let elem = document.getElementById(selected);
+			elem.innerHTML = "";
+			let idList = selected.split(",");
+			grid[idList[0]][idList[1]] = 0;
+		}
+		if (arrowList.includes(e.key)) {
+			if (selected) {
+				if (e.key == "ArrowUp") {
+					let idList = selected.split(",");
+					if (parseInt(idList[0]) == 0) {
+						return;
+					}
+					let newid = parseInt(idList[0]) - 1 + "," + idList[1];
+					select.call(document.getElementById(newid));
+				} else if (e.key == "ArrowRight") {
+					let idList = selected.split(",");
+					if (parseInt(idList[1]) == 8) {
+						return;
+					}
+					let newid = idList[0] + "," + (parseInt(idList[1]) + 1);
+					select.call(document.getElementById(newid));
+				} else if (e.key == "ArrowDown") {
+					let idList = selected.split(",");
+					if (parseInt(idList[0]) == 8) {
+						return;
+					}
+					let newid = parseInt(idList[0]) + 1 + "," + idList[1];
+					select.call(document.getElementById(newid));
+				} else if (e.key == "ArrowLeft") {
+					let idList = selected.split(",");
+					if (parseInt(idList[1]) == 0) {
+						return;
+					}
+					let newid = idList[0] + "," + (parseInt(idList[1]) - 1);
+					select.call(document.getElementById(newid));
+				}
+			}
+			return;
+		}
+		if (e.key == "Escape") {
+			unselect();
+		}
+	});
+
+	function solveSudoku() {
+		solve();
+		for (let i = 0; i < 9; i++) {
+			for (let j = 0; j < 9; j++) {
+				let elem = document.getElementById(i + "," + j);
+				elem.innerHTML = grid[i][j];
+			}
+		}
+	}
+
+	{
+		let solveButton = document.createElement("button");
+		solveButton.addEventListener("click", function () {
+			solveSudoku();
+		});
+		solveButton.innerHTML = "Solve The Puzzle!";
+		document.body.appendChild(solveButton);
+	}
+	{
+		let reloadButton = document.createElement("button");
+		reloadButton.addEventListener("click", function () {
+			window.location.reload();
+		});
+		reloadButton.innerHTML = "Solve a new puzzle!";
+		document.body.appendChild(reloadButton);
+	}
+</script>
