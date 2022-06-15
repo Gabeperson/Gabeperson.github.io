@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<script src="eel.js"></script>
 <title>Sudoku Solver Gui Version</title>
 <style>
 	div {
@@ -13,8 +12,121 @@
 		border-color: grey;
 		border-width: 1px;
 	}
+	.numberpad {
+		width: 20vw;
+		height: 10vh; 
+		position: absolute;
+		transform: translate(-50%, -50%);
+		font-size: 40px;
+	}
+	#numpadToggle {
+		font-size: 20px;
+		height: 50px;
+		width: 50px;
+		transform: translate(-100%, -100%);
+		position: absolute;
+		left: 100vw;
+		top: 100vh;
+	}
+	#bigger {
+		font-size: 20px;
+		height: 50px;
+		width: 50px;
+		transform: translate(0%, -100%);
+		position: absolute;
+		left: 0vw;
+		top: 100vh;
+	}
+	#smaller {
+		font-size: 20px;
+		height: 50px;
+		width: 50px;
+		transform: translate(100%, -100%);
+		position: absolute;
+		left: 0vw;
+		top: 100vh;
+	}
 </style>
-<body></body>
+<body>
+	
+	<table id="numpad">
+		<tr>
+			<td>
+				<button class="numberpad" style="top: 85vh; left: 10vw; "
+					onClick="setNumber(1);">
+					1
+				</button>
+			</td>
+			<td>
+				<button class="numberpad" style="top: 85vh; left: 30vw; "
+					onClick="setNumber(2);">
+					2
+				</button>
+			</td>
+			<td>
+				<button class="numberpad" style="top: 85vh; left: 50vw; "
+					onClick="setNumber(3);">
+					3
+				</button>
+			</td>
+			<td>
+				<button class="numberpad" style="top: 85vh; left: 70vw; "
+					onClick="setNumber(4);">
+					4
+				</button>
+			</td>
+			<td>
+				<button class="numberpad" style="top: 85vh; left: 90vw; "
+					onClick="setNumber(5);">
+					5
+				</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button class="numberpad" style="top: 95vh; left: 10vw; "
+					onClick="setNumber(6);">
+					6
+				</button>
+			</td>
+			<td>
+				<button class="numberpad" style="top: 95vh; left: 30vw; "
+					onClick="setNumber(7);">
+					7
+				</button>
+			</td>
+			<td>
+				<button class="numberpad" style="top: 95vh; left: 50vw; "
+					onClick="setNumber(8);">
+					8
+				</button>
+			</td>
+			<td>
+				<button class="numberpad" style="top: 95vh; left: 70vw; "
+					onClick="setNumber(9);">
+					9
+				</button>
+			</td>
+			<td>
+				<button class="numberpad" style="top: 95vh; left: 90vw; "
+					onClick='
+						if (selected) {
+							let elem = document.getElementById(selected);
+							elem.innerHTML = "";
+							let idList = selected.split(",");
+							grid[idList[0]][idList[1]] = 0;
+						}
+					'>
+					del
+				</button>
+			</td>
+		</tr>
+	</table>
+	<center id="centertag"></center>
+	<button id="numpadToggle" onClick="triggerNumpad()">/\</button>
+	<button id="bigger" onClick="sizeControl(true);">[+]</button>
+	<button id="smaller" onClick="sizeControl(false);">[-]</button>
+</body>
 
 <script>
 	const keyList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -32,8 +144,8 @@
 	const arrowList = ["ArrowLeft", "ArrowDown", "ArrowRight", "ArrowUp"];
 	var selected;
 	{
-		var size = "80px"; // 50 if smaller
-		var table = document.createElement("table");
+		let size = "90px"; // 50 if smaller
+		let table = document.createElement("table");
 		table.cellSpacing = 0.5;
 		table.border = 0;
 		table.cellPadding = 0;
@@ -47,14 +159,31 @@
 				div.id = id;
 				div.style.width = size;
 				div.style.height = size;
+				if (i == 0 || i == 3 || i == 6) {
+					div.style.borderTopWidth = "3px";
+					div.style.borderTopColor = "black";
+				}
+				if (j == 0 || j==3 || j == 6) {
+					div.style.borderLeftWidth = "3px";
+					div.style.borderLeftColor = "black";
+				}
+				if (i == 8) {
+					div.style.borderBottomWidth = "3px";
+					div.style.borderBottomColor = "black";
+				}
+				if (j == 8) {
+					div.style.borderRightWidth = "3px";
+					div.style.borderRightColor = "black";
+				}
 				div.addEventListener("click", select);
 				xDirection.appendChild(div);
 				yDirection.appendChild(xDirection);
 			}
 			table.appendChild(yDirection);
 		}
-		document.body.appendChild(table);
+		document.getElementById("centertag").appendChild(table);
 	}
+	
 
 	var solved = false;
 
@@ -115,16 +244,22 @@
 		selected = undefined;
 	}
 
+	function setNumber(number) {
+		if (selected) {
+		let elem = document.getElementById(selected);
+		let idList = selected.split(",");
+		grid[idList[0]][idList[1]] = parseInt(number);
+		elem.innerHTML = number;
+		return;
+		}
+	}
+
 	document.addEventListener("keydown", function (e) {
 		e = e || window.event;
 
 		if (keyList.includes(parseInt(e.key))) {
 			if (selected) {
-				let elem = document.getElementById(selected);
-				let idList = selected.split(",");
-				grid[idList[0]][idList[1]] = parseInt(e.key);
-				elem.innerHTML = e.key;
-				return;
+				setNumber(e.key);
 			}
 		}
 		if (e.key == "Backspace") {
@@ -188,7 +323,9 @@
 			solveSudoku();
 		});
 		solveButton.innerHTML = "Solve The Puzzle!";
-		document.body.appendChild(solveButton);
+		solveButton.style.height = "50px";
+		solveButton.style.width = "150px";
+		document.getElementById("centertag").appendChild(solveButton);
 	}
 	{
 		let reloadButton = document.createElement("button");
@@ -196,6 +333,53 @@
 			window.location.reload();
 		});
 		reloadButton.innerHTML = "Solve a new puzzle!";
-		document.body.appendChild(reloadButton);
+		reloadButton.style.height = "50px";
+		reloadButton.style.width = "150px";
+		document.getElementById("centertag").appendChild(reloadButton);
 	}
+
+	var numPadVisibility = false;
+	document.getElementById("numpad").style.visibility = "hidden";
+
+	function triggerNumpad() {
+		if (numPadVisibility) {
+			document.getElementById("numpad").style.visibility = "hidden";
+			document.getElementById("numpadToggle").style.top = "100vh";
+			document.getElementById("numpadToggle").innerHTML = "/\\";
+			document.getElementById("bigger").style.top = document.getElementById("numpadToggle").style.top;
+			document.getElementById("smaller").style.top = document.getElementById("numpadToggle").style.top;
+		} else {
+			document.getElementById("numpad").style.visibility = "visible";
+			document.getElementById("numpadToggle").style.top = "80vh";
+			document.getElementById("numpadToggle").innerHTML = "\\/";
+			document.getElementById("bigger").style.top = document.getElementById("numpadToggle").style.top;
+			document.getElementById("smaller").style.top = document.getElementById("numpadToggle").style.top;
+		}
+		numPadVisibility = !numPadVisibility;
+	}
+
+	
+	function sizeControl(biggerYes) {
+		let size = parseInt(document.getElementById("0,0").style.height);
+		if (biggerYes) {
+			size += 5;
+		} else {
+			size -= 5;
+		}
+		for (let i = 0; i < 9; i++) {
+			for (let j = 0; j < 9; j++) {
+				let elem = document.getElementById(i + "," + j);
+				elem.style.width = size + "px";
+				elem.style.height = size + "px";
+			}
+		}
+	}
+
+
+
+
+	
+
+
+
 </script>
