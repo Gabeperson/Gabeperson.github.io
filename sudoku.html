@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<title>Sudoku Solver Gui Version</title>
+<title>Sudoku Solver w/ GUI | © 2022 Gabeperson</title>
 <style>
 	div {
 		display: flex;
@@ -122,7 +122,7 @@
 			</td>
 		</tr>
 	</table>
-	<center id="centertag"></center>
+	<center id="centertag"><h3 onClick="this.style.visibility = 'hidden'; this.style.display = 'none';">Warning: do NOT enter numbers that make it impossible to solve! It may make the page not respond! (Click to hide)</h3></center>
 	<button id="numpadToggle" onClick="triggerNumpad()">/\</button>
 	<button id="bigger" onClick="sizeControl(true);">[+]</button>
 	<button id="smaller" onClick="sizeControl(false);">[-]</button>
@@ -329,9 +329,7 @@
 	}
 	{
 		let reloadButton = document.createElement("button");
-		reloadButton.addEventListener("click", function () {
-			window.location.reload();
-		});
+		reloadButton.addEventListener("click", reset);
 		reloadButton.innerHTML = "Solve a new puzzle!";
 		reloadButton.style.height = "50px";
 		reloadButton.style.width = "150px";
@@ -376,7 +374,26 @@
 	}
 
 
-
+	function reset() {
+		grid = [
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+		];
+		for (let i = 0; i < 9; i++) {
+			for (let j = 0; j < 9; j++) {
+				let elem = document.getElementById(i + "," + j);
+				elem.innerHTML = "";
+			}
+		}
+		solved = false;
+	}
 
 	
 
