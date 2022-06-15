@@ -122,7 +122,8 @@
 			</td>
 		</tr>
 	</table>
-	<center id="centertag"><h3 onClick="this.style.visibility = 'hidden'; this.style.display = 'none';">Warning: do NOT enter numbers that make it impossible to solve! It may make the page not respond! (Click to hide)</h3></center>
+	<center id="centertag"></center>
+	<center><h3 onClick="this.style.visibility = 'hidden'; this.style.display = 'none';">Warning: do NOT enter numbers that make it impossible to solve! It may make the page not respond! (Click to hide)</h3></center>
 	<button id="numpadToggle" onClick="triggerNumpad()">/\</button>
 	<button id="bigger" onClick="sizeControl(true);">[+]</button>
 	<button id="smaller" onClick="sizeControl(false);">[-]</button>
@@ -323,16 +324,16 @@
 			solveSudoku();
 		});
 		solveButton.innerHTML = "Solve The Puzzle!";
-		solveButton.style.height = "50px";
-		solveButton.style.width = "150px";
+		solveButton.style.height = "120px";
+		solveButton.style.width = "230px";
 		document.getElementById("centertag").appendChild(solveButton);
 	}
 	{
 		let reloadButton = document.createElement("button");
 		reloadButton.addEventListener("click", reset);
 		reloadButton.innerHTML = "Solve a new puzzle!";
-		reloadButton.style.height = "50px";
-		reloadButton.style.width = "150px";
+		reloadButton.style.height = "120px";
+		reloadButton.style.width = "230px";
 		document.getElementById("centertag").appendChild(reloadButton);
 	}
 
