@@ -21,7 +21,7 @@
       }
       setInterval(setRotation, 10);
 
-      window.addEventListener("deviceorientation", (e) => {
+      window.addEventListener("deviceorientationabsolute", (e) => {
             console.log(e.absolute);
             document.getElementById("angleShowing").innerHTML = ` ${Math.floor(e.alpha)} : ${Math.floor(e.beta)} : ${Math.floor(e.gamma)} : ${e.absolute}`;
       })
