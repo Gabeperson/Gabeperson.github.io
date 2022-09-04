@@ -43,7 +43,7 @@
 
       window.addEventListener("deviceorientationabsolute", (e) => {
             console.log(e.absolute);
-            document.getElementById("angleShowing").innerHTML = ` ${Math.floor(360 - e.alpha)} : ${e.absolute}`;
+            document.getElementById("angleShowing").innerHTML = ` Current heading: ${Math.floor(360 - e.alpha)} : ${e.absolute}`;
             rotationAngle = e.alpha;
       })
 </script>
