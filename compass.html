@@ -1,0 +1,28 @@
+<style>
+      div {
+            height: 300px;
+            width: 20px;
+            color: white;
+            background-color: red;
+            position: absolute;
+            left: 50vw;
+            top: 50vh;
+            text-align: center;
+            padding: 10px;
+      }
+</style>
+<div id="mainDiv">N</div>
+<p id="angleShowing" style="position: absolute; transform: translate(-50%,-50%); top: 70vh; left: 50vw; background-color: lightGreen; font-size: 30px; color: black;">Text</p>
+<script>
+      const mainDiv = document.getElementById("mainDiv")
+      var rotationAngle = 0
+      function setRotation() {
+            mainDiv.style.transform = `translate(-50%,-50%) rotate(${rotationAngle}deg)`
+      }
+      setInterval(setRotation, 10);
+
+      window.addEventListener("deviceorientation", (e) => {
+            console.log(e.absolute);
+            document.getElementById("angleShowing").innerHTML = ` ${e.alpha} : ${e.beta} : ${e.gamma}`;
+      })
+</script>
