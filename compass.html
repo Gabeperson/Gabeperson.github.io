@@ -19,7 +19,7 @@
       function setRotation() {
             mainDiv.style.transform = `translate(-50%,-50%) rotate(${rotationAngle}deg)`
       }
-      setInterval(setRotation, 10);
+      setInterval(setRotation, 4);
 
       window.addEventListener("deviceorientationabsolute", (e) => {
             console.log(e.absolute);
