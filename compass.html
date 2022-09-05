@@ -32,7 +32,7 @@
       <div class="compass-circle"></div>
 </div>
 <p id="angleShowing" style="position: absolute; transform: translate(-50%,-50%); top: 70vh; left: 50vw; background-color: lightGreen; font-size: 30px; color: black;">Text</p>
-<img src="assets/compass-bg.png" class="compass-bg-image" width="800px" height="800px"/>
+<img src="assets/compass-bg.png" class="compass-bg-image" width="800px" height="800px" id="compassBg" />
 <script>
       const mainDiv = document.getElementById("mainDiv")
       var rotationAngle = 0
@@ -41,21 +41,24 @@
       }
       setInterval(setRotation, 4);
 
-      function addListener() {
-            window.addEventListener("deviceorientationabsolute", (e) => {
-                  console.log(e.absolute);
-                  document.getElementById("angleShowing").innerHTML = ` Current heading: ${Math.floor(360 - e.alpha)} : ${e.absolute}`;
-                  rotationAngle = e.alpha;
-            })
-      };
-      addListener();
+      
+      window.addEventListener("deviceorientationabsolute", (e) => {
+            console.log(e.absolute);
+            document.getElementById("angleShowing").innerHTML = ` Current heading: ${Math.floor(360 - e.alpha)} : ${e.absolute}`;
+            rotationAngle = e.alpha;
+      })
 
       function requestPermission() {
             DeviceOrientationEvent.requestPermission()
             .then(response => {
                   if (response == "granted") {
-                        addListener();
+                        alert("Permission received. Enjoy!");
+                  } else {
+                        alert("Permission denied... :'( If you misclicked, reload the page.")
                   }
             })
       }
+
+      mainDiv.addEventListener("click", requestPermission);
+      document.getElementById("compassBg").addEventListener("click", requestPermission);
 </script>
