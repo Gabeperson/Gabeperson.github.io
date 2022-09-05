@@ -53,6 +53,11 @@
             .then(response => {
                   if (response == "granted") {
                         alert("Permission received. Enjoy!");
+                        window.addEventListener("deviceorientationabsolute", (e) => {
+                              console.log(e.absolute);
+                              document.getElementById("angleShowing").innerHTML = ` Current heading: ${Math.floor(360 - e.alpha)} : ${e.absolute}`;
+                              rotationAngle = e.alpha;
+                        })
                   } else {
                         alert("Permission denied... :'( If you misclicked, reload the page.")
                   }
