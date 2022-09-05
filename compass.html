@@ -41,9 +41,21 @@
       }
       setInterval(setRotation, 4);
 
-      window.addEventListener("deviceorientationabsolute", (e) => {
-            console.log(e.absolute);
-            document.getElementById("angleShowing").innerHTML = ` Current heading: ${Math.floor(360 - e.alpha)} : ${e.absolute}`;
-            rotationAngle = e.alpha;
-      })
+      function addListener() {
+            window.addEventListener("deviceorientationabsolute", (e) => {
+                  console.log(e.absolute);
+                  document.getElementById("angleShowing").innerHTML = ` Current heading: ${Math.floor(360 - e.alpha)} : ${e.absolute}`;
+                  rotationAngle = e.alpha;
+            })
+      };
+      addListener();
+
+      function requestPermission() {
+            DeviceOrientationEvent.requestPermission()
+            .then(response => {
+                  if (response == "granted") {
+                        addListener();
+                  }
+            })
+      }
 </script>
