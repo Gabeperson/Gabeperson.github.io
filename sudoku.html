@@ -13,131 +13,94 @@
 		border-width: 1px;
 	}
 	.numberpad {
-		width: 20vw;
-		height: 10vh; 
-		position: fixed;
-		transform: translate(-50%, -50%);
+		width: 100px;
+		height: 100px; 
+		position: relative;
 		font-size: 40px;
-		top: 85vh;
-		-webkit-backface-visibility: hidden;
-		backface-visibility: hidden;
-	}
-	.numberpadBottom {
-		top: 95vh;
+
 	}
 	#numpadToggle {
 		font-size: 20px;
 		height: 100px;
 		width: 100px;
-		transform: translate(-100%, -100%);
-		position: fixed;
-		left: 100vw;
-		top: 100vh;
-		-webkit-backface-visibility: hidden;
-		backface-visibility: hidden;
+		position: relative;
+		
 	}
 	#bigger {
 		font-size: 20px;
 		height: 100px;
 		width: 100px;
-		transform: translate(0%, -100%);
-		position: fixed;
-		left: 0vw;
-		top: 100vh;
-		-webkit-backface-visibility: hidden;
-		backface-visibility: hidden;
+		position: relative;
+		
+
 	}
 	#smaller {
 		font-size: 20px;
 		height: 100px;
 		width: 100px;
-		transform: translate(100%, -100%);
-		position: fixed;
-		left: 0vw;
-		top: 100vh;
-		-webkit-backface-visibility: hidden;
-		backface-visibility: hidden;
+		position: relative;
+		
+
 	}
 </style>
 <body>
-	
-	<table id="numpad">
-		<tr>
-			<td>
-				<button class="numberpad" style="left: 10vw; "
-					onClick="setNumber(1);">
-					1
-				</button>
-			</td>
-			<td>
-				<button class="numberpad" style="left: 30vw; "
-					onClick="setNumber(2);">
-					2
-				</button>
-			</td>
-			<td>
-				<button class="numberpad" style="left: 50vw; "
-					onClick="setNumber(3);">
-					3
-				</button>
-			</td>
-			<td>
-				<button class="numberpad" style="left: 70vw; "
-					onClick="setNumber(4);">
-					4
-				</button>
-			</td>
-			<td>
-				<button class="numberpad" style="left: 90vw; "
-					onClick="setNumber(5);">
-					5
-				</button>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<button class="numberpad numberpadBottom" style="left: 10vw; "
-					onClick="setNumber(6);">
-					6
-				</button>
-			</td>
-			<td>
-				<button class="numberpad numberpadBottom" style="left: 30vw; "
-					onClick="setNumber(7);">
-					7
-				</button>
-			</td>
-			<td>
-				<button class="numberpad numberpadBottom" style="left: 50vw; "
-					onClick="setNumber(8);">
-					8
-				</button>
-			</td>
-			<td>
-				<button class="numberpad numberpadBottom" style="left: 70vw; "
-					onClick="setNumber(9);">
-					9
-				</button>
-			</td>
-			<td>
-				<button class="numberpad numberpadBottom" style="left: 90vw; "
-					onClick='
-						if (selected) {
-							let elem = document.getElementById(selected);
-							elem.innerHTML = "";
-							let idList = selected.split(",");
-							grid[idList[0]][idList[1]] = 0;
-						}
-					'>
-					del
-				</button>
-			</td>
-		</tr>
-	</table>
-	<center id="centertag"></center>
-	<button id="numpadToggle" onClick="triggerNumpad()">/\</button>
+	<button id="numpadToggle" onClick="triggerNumpad()">Show</button>
 	<button id="bigger" onClick="sizeControl(true);">[+]</button>
 	<button id="smaller" onClick="sizeControl(false);">[-]</button>
+	<span id="numpad" style="display: inline-block;">
+
+		<button class="numberpad" onClick="setNumber(1);">
+			1
+		</button>
+
+		<button class="numberpad" onClick="setNumber(2);">
+			2
+		</button>
+
+		<button class="numberpad" onClick="setNumber(3);">
+			3
+		</button>
+
+		<button class="numberpad" onClick="setNumber(4);">
+			4
+		</button>
+
+		<button class="numberpad" onClick="setNumber(5);">
+			5
+		</button>
+
+		<button class="numberpad" onClick="setNumber(6);">
+			6
+		</button>
+
+		<button class="numberpad" onClick="setNumber(7);">
+			7
+		</button>
+
+		<button class="numberpad" onClick="setNumber(8);">
+			8
+		</button>
+
+		<button class="numberpad" onClick="setNumber(9);">
+			9
+		</button>
+
+		<button class="numberpad" onClick='
+				if (selected) {
+					let elem = document.getElementById(selected);
+					elem.innerHTML = "";
+					let idList = selected.split(",");
+					grid[idList[0]][idList[1]] = 0;
+				}
+			'>
+			del
+		</button>
+	</span>
+</center>
+	<center id="centertag"></center>
+	<center>
+	
+	
 </body>
 
 <script>
@@ -387,16 +350,12 @@
 	function triggerNumpad() {
 		if (numPadVisibility) {
 			document.getElementById("numpad").style.visibility = "hidden";
-			document.getElementById("numpadToggle").style.top = "100vh";
-			document.getElementById("numpadToggle").innerHTML = "/\\";
-			document.getElementById("bigger").style.top = document.getElementById("numpadToggle").style.top;
-			document.getElementById("smaller").style.top = document.getElementById("numpadToggle").style.top;
+			document.getElementById("numpadToggle").innerHTML = "Show";
+
 		} else {
 			document.getElementById("numpad").style.visibility = "visible";
-			document.getElementById("numpadToggle").style.top = "80vh";
-			document.getElementById("numpadToggle").innerHTML = "\\/";
-			document.getElementById("bigger").style.top = document.getElementById("numpadToggle").style.top;
-			document.getElementById("smaller").style.top = document.getElementById("numpadToggle").style.top;
+			document.getElementById("numpadToggle").innerHTML = "Hide";
+
 		}
 		numPadVisibility = !numPadVisibility;
 	}
@@ -416,6 +375,7 @@
 				elem.style.height = size + "px";
 			}
 		}
+		
 	}
 
 
