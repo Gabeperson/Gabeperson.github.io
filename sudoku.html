@@ -15,7 +15,7 @@
 	.numberpad {
 		width: 20vw;
 		height: 10vh; 
-		position: absolute;
+		position: fixed;
 		transform: translate(-50%, -50%);
 		font-size: 40px;
 	}
@@ -24,7 +24,7 @@
 		height: 100px;
 		width: 100px;
 		transform: translate(-100%, -100%);
-		position: absolute;
+		position: fixed;
 		left: 100vw;
 		top: 100vh;
 	}
@@ -33,7 +33,7 @@
 		height: 100px;
 		width: 100px;
 		transform: translate(0%, -100%);
-		position: absolute;
+		position: fixed;
 		left: 0vw;
 		top: 100vh;
 	}
@@ -42,7 +42,7 @@
 		height: 100px;
 		width: 100px;
 		transform: translate(100%, -100%);
-		position: absolute;
+		position: fixed;
 		left: 0vw;
 		top: 100vh;
 	}
@@ -123,9 +123,6 @@
 		</tr>
 	</table>
 	<center id="centertag"></center>
-	<center><h3 onClick="this.style.visibility = 'hidden'; this.style.display = 'none';">
-		You may have to scroll down to view menu items if on mobile!<br>
-		Warning: do NOT enter numbers that make it impossible to solve! It may make the page not respond! (Click to hide)</h3></center>
 	<button id="numpadToggle" onClick="triggerNumpad()">/\</button>
 	<button id="bigger" onClick="sizeControl(true);">[+]</button>
 	<button id="smaller" onClick="sizeControl(false);">[-]</button>
@@ -213,7 +210,11 @@
 		return true;
 	}
 
+	const maxRepets = 2000;	
+	var repets = 0;
 	function solve() {
+		repets++;
+		console.log(repets)
 		for (var y = 0; y < 9; y++) {
 			for (var x = 0; x < 9; x++) {
 				if (grid[y][x] == 0) {
@@ -221,6 +222,9 @@
 						if (possible(y, x, n)) {
 							grid[y][x] = n;
 							solve();
+							if (repets > maxRepets) {
+								return;
+							}
 							if (solved) {
 								return;
 							}
@@ -270,31 +274,34 @@
 			elem.innerHTML = "";
 			let idList = selected.split(",");
 			grid[idList[0]][idList[1]] = 0;
-		}
-		if (arrowList.includes(e.key)) {
-			if (selected) {
-				if (e.key == "ArrowUp") {
+		} else if (arrowList.includes(e.key) && selected) {
+
+			switch (e.key) {
+				case "ArrowUp": {
 					let idList = selected.split(",");
 					if (parseInt(idList[0]) == 0) {
 						return;
 					}
 					let newid = parseInt(idList[0]) - 1 + "," + idList[1];
 					select.call(document.getElementById(newid));
-				} else if (e.key == "ArrowRight") {
+				}
+				case "ArrowRight": {
 					let idList = selected.split(",");
 					if (parseInt(idList[1]) == 8) {
 						return;
 					}
 					let newid = idList[0] + "," + (parseInt(idList[1]) + 1);
 					select.call(document.getElementById(newid));
-				} else if (e.key == "ArrowDown") {
+				}
+				case "ArrowDown": {
 					let idList = selected.split(",");
 					if (parseInt(idList[0]) == 8) {
 						return;
 					}
 					let newid = parseInt(idList[0]) + 1 + "," + idList[1];
 					select.call(document.getElementById(newid));
-				} else if (e.key == "ArrowLeft") {
+				}
+				case "ArrowLeft": {
 					let idList = selected.split(",");
 					if (parseInt(idList[1]) == 0) {
 						return;
@@ -303,6 +310,7 @@
 					select.call(document.getElementById(newid));
 				}
 			}
+			
 			return;
 		}
 		if (e.key == "Escape") {
@@ -311,11 +319,33 @@
 	});
 
 	function solveSudoku() {
-		solve();
-		for (let i = 0; i < 9; i++) {
-			for (let j = 0; j < 9; j++) {
-				let elem = document.getElementById(i + "," + j);
-				elem.innerHTML = grid[i][j];
+		
+		var arrayBackup = JSON.parse(JSON.stringify(grid));
+
+		for (var rotations = 0; rotations < 4; rotations++) {
+			repets = 0;
+			grid = JSON.parse(JSON.stringify(arrayBackup));
+			for (var rotation = 0; rotation < rotations; rotation++) {
+				grid = turnGrid(grid);
+			}
+			solve();
+			if (solved) {
+				for (var rotation = 0; rotation < (4 - rotations) % 4; rotation++) {
+					grid = turnGrid(grid);
+				}
+				break;
+			}
+			
+		}
+		if (!solved) {
+			grid = JSON.parse(JSON.stringify(arrayBackup));
+			alert("Current grid is impossible to solve or is too difficult to brute force.")
+		} else {
+			for (let i = 0; i < 9; i++) {
+				for (let j = 0; j < 9; j++) {
+					let elem = document.getElementById(i + "," + j);
+					elem.innerHTML = grid[i][j];
+				}
 			}
 		}
 	}
@@ -360,9 +390,9 @@
 	}
 
 	
-	function sizeControl(biggerYes) {
+	function sizeControl(bigger) {
 		let size = parseInt(document.getElementById("0,0").style.height);
-		if (biggerYes) {
+		if (bigger) {
 			size += 5;
 		} else {
 			size -= 5;
@@ -398,6 +428,19 @@
 		solved = false;
 	}
 
+
+
+	function turnGrid(grid) {
+		var newGrid = [];
+		for (var i = 0; i < 9; i++) {
+			var row = []
+			for (var j = 0; j < 9; j++) {
+				row.push(grid[8-j][i]);
+			}
+			newGrid.push(row);
+		}
+		return newGrid;
+	}
 	
 
 
