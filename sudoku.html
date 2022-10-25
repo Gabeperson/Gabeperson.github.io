@@ -259,6 +259,7 @@
 					}
 					let newid = parseInt(idList[0]) - 1 + "," + idList[1];
 					select.call(document.getElementById(newid));
+					break;
 				}
 				case "ArrowRight": {
 					let idList = selected.split(",");
@@ -267,6 +268,7 @@
 					}
 					let newid = idList[0] + "," + (parseInt(idList[1]) + 1);
 					select.call(document.getElementById(newid));
+					break;
 				}
 				case "ArrowDown": {
 					let idList = selected.split(",");
@@ -275,6 +277,7 @@
 					}
 					let newid = parseInt(idList[0]) + 1 + "," + idList[1];
 					select.call(document.getElementById(newid));
+					break;
 				}
 				case "ArrowLeft": {
 					let idList = selected.split(",");
@@ -283,6 +286,7 @@
 					}
 					let newid = idList[0] + "," + (parseInt(idList[1]) - 1);
 					select.call(document.getElementById(newid));
+					break;
 				}
 			}
 			
