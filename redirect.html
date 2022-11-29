@@ -15,16 +15,27 @@
       var messageToSend = "Clicked!";
 
       
+      document.addEventListener("keyup", (event) => {
+            console.log(event.key)
+            if (event.key == "Enter" || event.keyCode === 13) {
+                  redirect()  
+            }
+      });
 
-
-      connect.addEventListener("click", function() {
+      const redirect = () => {
             let encodedIP = input.value.toUpperCase();
+            if (!encodedIP) {return}
             if (encodedIP.length === 4) {encodedIP = "MAKI" + encodedIP}
             var ip = []
             encodedIP.match(/.{1,2}/g).forEach((n) => ip.push((n.charAt(0).charCodeAt(0)-65)*16+(n.charAt(1).charCodeAt(0)-65)))
             ip = ip.join(".")
             console.log(`Redirecting to ${ip}`)
             location.href = "http://" + ip + ":8080"
+      }
+
+      
+      connect.addEventListener("click", function() {
+            redirect();
       })
 
 </script>
